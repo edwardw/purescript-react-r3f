@@ -18,5 +18,5 @@ planeGeometry
   :: forall props
    . Record props
   -> JSX
-planeGeometry = element boxGeometry_
+planeGeometry = element planeGeometry_
 
