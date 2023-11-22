@@ -13,6 +13,6 @@ import React.Basic.Three.Controls (orbitControls) as Controls
 import React.Basic.Three.Lights (ambientLight, directionalLight, directionalLightShadow) as Lights
 import React.Basic.Three.Materials (meshLambertMaterial, meshPhongMaterial, meshStandardMaterial) as Materials
 import React.Basic.Three.Misc (stats) as Misc
-import React.Basic.Three.Shapes (boxGeometry, planeGeometry) as Shapes
+import React.Basic.Three.Shapes (boxGeometry, planeGeometry, torusKnotGeometry) as Shapes
 import React.Basic.Three.Web (canvas) as Web
 
