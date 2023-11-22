@@ -1,4 +1,7 @@
-module React.Basic.Three.Shapes where
+module React.Basic.Three.Shapes
+  ( boxGeometry
+  , planeGeometry
+  ) where
 
 import React.Basic (JSX, ReactComponent, element)
 

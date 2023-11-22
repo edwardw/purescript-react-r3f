@@ -1,4 +1,4 @@
-module React.Basic.Three.Cameras where
+module React.Basic.Three.Cameras (perspectiveCamera) where
 
 import React.Basic (JSX, ReactComponent, element)
 

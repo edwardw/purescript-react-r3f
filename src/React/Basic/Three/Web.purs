@@ -1,4 +1,4 @@
-module React.Basic.Three.Web where
+module React.Basic.Three.Web (canvas) where
 
 import React.Basic (JSX, ReactComponent, element)
 

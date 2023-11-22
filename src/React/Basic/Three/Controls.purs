@@ -1,4 +1,4 @@
-module React.Basic.Three.Controls where
+module React.Basic.Three.Controls (orbitControls) where
 
 import React.Basic (JSX, ReactComponent, element)
 

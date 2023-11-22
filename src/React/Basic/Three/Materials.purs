@@ -1,4 +1,8 @@
-module React.Basic.Three.Materials where
+module React.Basic.Three.Materials
+  ( meshLambertMaterial
+  , meshPhongMaterial
+  , meshStandardMaterial
+  ) where
 
 import Prelude
 

@@ -1,4 +1,4 @@
-module React.Basic.Three.Lights where
+module React.Basic.Three.Lights (ambientLight, directionalLight) where
 
 import Prelude
 
@@ -15,7 +15,7 @@ ambientLight = element (threejs "AmbientLight")
 directionalLight
   :: forall props
    . Record props
-   -> JSX
+  -> JSX
 directionalLight = element (threejs "DirectionalLight")
 
 threejs :: forall props. String -> ReactComponent { | props }
