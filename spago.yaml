@@ -1,0 +1,15 @@
+package:
+  dependencies:
+    - console
+    - effect
+    - prelude
+    - react-basic
+    - react-basic-dom
+  name: react-basic-three
+  test:
+    dependencies: []
+    main: Test.Main
+workspace:
+  extra_packages: {}
+  package_set:
+    registry: 46.1.1
