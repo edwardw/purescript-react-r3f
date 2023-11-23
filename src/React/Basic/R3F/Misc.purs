@@ -1,4 +1,4 @@
-module React.Basic.Three.Misc (stats) where
+module React.Basic.R3F.Misc (stats) where
 
 import React.Basic (JSX, ReactComponent, element)
 

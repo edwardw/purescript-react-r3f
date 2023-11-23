@@ -1,4 +1,4 @@
-module React.Basic.Three.Cameras
+module React.Basic.R3F.Cameras
   ( orthographicCamera
   , perspectiveCamera
   ) where

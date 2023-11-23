@@ -1,4 +1,4 @@
-module React.Basic.Three.Materials
+module React.Basic.R3F.Materials
   ( meshLambertMaterial
   , meshPhongMaterial
   , meshStandardMaterial

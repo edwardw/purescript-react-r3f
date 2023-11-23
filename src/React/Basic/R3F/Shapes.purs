@@ -1,4 +1,4 @@
-module React.Basic.Three.Shapes
+module React.Basic.R3F.Shapes
   ( boxGeometry
   , planeGeometry
   , torusKnotGeometry

@@ -1,4 +1,4 @@
-module React.Basic.Three.Lights
+module React.Basic.R3F.Lights
   ( ambientLight
   , directionalLight
   , directionalLightShadow
