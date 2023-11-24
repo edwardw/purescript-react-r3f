@@ -5,6 +5,7 @@ package:
     - prelude
     - react-basic
     - react-basic-dom
+    - react-basic-hooks
   name: react-basic-three
   test:
     dependencies: []
