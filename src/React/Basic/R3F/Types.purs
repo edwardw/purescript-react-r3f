@@ -2,6 +2,7 @@ module React.Basic.R3F.Types where
 
 import Prelude
 
+import Data.Function.Uncurried (Fn3)
 import Effect.Uncurried (EffectFn1, EffectFn2)
 import React.Basic (JSX, Ref)
 
@@ -18,6 +19,6 @@ type Props_Object3D =
   )
 
 -- This is intrinsically unsafe. Is there anything better?
-foreign import setPosition :: EffectFn2 (Ref JSX) (Array Number) Unit
-foreign import setRotation :: EffectFn2 (Ref JSX) (Array Number) Unit
+foreign import setPosition :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import setRotation :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
 
