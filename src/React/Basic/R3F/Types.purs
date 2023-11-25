@@ -12,13 +12,6 @@ foreign import data Clock :: Type
 
 foreign import getElapsedTime :: EffectFn1 Clock Number
 
--- | A subset of attributes of [three.js#Object3D](https://threejs.org/docs/#api/en/core/Object3D)
-type Props_Object3D =
-  ( position :: Array Number
-  , rotation :: Array Number
-  )
-
--- This is intrinsically unsafe. Is there anything better?
 foreign import setPosition :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
 foreign import setRotation :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
 
