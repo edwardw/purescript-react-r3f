@@ -22,7 +22,7 @@ type RootState =
   ( clock :: Three.Clock
   , pointer :: Three.Vector2
   , scene :: Three.Scene
-  , renderer :: Three.WebGLRenderer
+  , gl :: Three.WebGLRenderer
   )
 
 useFrame
@@ -35,8 +35,9 @@ useThree
    . IsSymbol k
   => Cons k v props RootState
   => Proxy k
+  -> (v -> Effect v)
   -> Hook (UseThree v) v
-useThree k = unsafeHook $ runEffectFn1 useThreeImpl getter
+useThree k f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
   where
   getter :: Record RootState -> v
   getter = Lens.view lens

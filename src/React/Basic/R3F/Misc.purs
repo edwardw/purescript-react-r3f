@@ -5,12 +5,17 @@ module React.Basic.R3F.Misc
   , Scene
   , Fog
   , stats
+  , group
   ) where
 
-import Effect.Uncurried (EffectFn1)
-import React.Basic (JSX, ReactComponent, element)
+import Prelude
 
-foreign import statsImpl :: forall props. ReactComponent { | props }
+import Effect (Effect)
+import Effect.Uncurried (EffectFn1)
+import Effect.Unsafe (unsafePerformEffect)
+import Prim.Row (class Union)
+import React.Basic (JSX, ReactComponent, element)
+import React.Basic.DOM (unsafeCreateDOMComponent)
 
 stats :: JSX
 stats = element statsImpl {}
@@ -20,6 +25,23 @@ type Props_fog = (color :: String, near :: Number, far :: Number)
 foreign import data Scene :: Type
 foreign import data Fog :: Type
 
-foreign import createFog :: EffectFn1 (Record Props_fog) Fog
-foreign import createScene :: EffectFn1 Fog Scene
+foreign import createFogImpl :: forall props. EffectFn1 (Record props) Fog
+foreign import createScene :: Effect Scene
+
+createFog
+  :: forall props props_
+   . Union props props_ Props_fog
+  => EffectFn1 (Record props) Fog
+createFog = createFogImpl
+
+group
+  :: forall props
+   . Record props
+  -> JSX
+group = element (threejs "Group")
+
+threejs :: forall props. String -> ReactComponent { | props }
+threejs = unsafePerformEffect <<< unsafeCreateDOMComponent
+
+foreign import statsImpl :: forall props. ReactComponent { | props }
 

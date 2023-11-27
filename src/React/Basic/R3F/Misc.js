@@ -3,13 +3,12 @@ import * as THREE from "three"
 
 export const statsImpl = R3D.Stats
 
-export const createFog = (props) => {
+export const createFogImpl = (props) => {
   return new THREE.Fog(...Object.values(props))
 }
 
-export const createScene = (fog) => {
+export const createScene = () => {
   const scene = new THREE.Scene()
-  scene.fog = fog
   return scene
 }
 
