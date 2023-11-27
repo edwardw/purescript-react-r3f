@@ -4,6 +4,7 @@ package:
     - effect
     - functions
     - prelude
+    - profunctor-lenses
     - react-basic
     - react-basic-dom
     - react-basic-hooks

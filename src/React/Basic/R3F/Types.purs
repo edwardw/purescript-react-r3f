@@ -10,8 +10,10 @@ module React.Basic.R3F.Types
 import Prelude
 
 import Data.Function.Uncurried (Fn3)
-import Effect.Uncurried (EffectFn1, EffectFn2)
+import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn2, runEffectFn2)
 import React.Basic (JSX, Ref)
+import React.Basic.R3F (Scene)
+import Unsafe.Coerce (unsafeCoerce)
 
 foreign import data Vector2 :: Type
 foreign import data Vector3 :: Type
@@ -36,6 +38,11 @@ instance object3DJSX :: Object3D JSX JSX where
   setPosition = setPositionImpl
   setRotation = setRotationImpl
   add = addImpl
+
+instance object3DScene :: Object3D Scene JSX where
+  setPosition = mkEffectFn2 \obj -> runEffectFn2 setPositionImpl (unsafeCoerce obj)
+  setRotation = mkEffectFn2 \obj -> runEffectFn2 setRotationImpl (unsafeCoerce obj)
+  add = mkEffectFn2 \parent -> runEffectFn2 addImpl (unsafeCoerce parent)
 
 foreign import setPositionByRefImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
 foreign import setRotationByRefImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
