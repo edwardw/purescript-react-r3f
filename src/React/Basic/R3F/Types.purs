@@ -1,4 +1,11 @@
-module React.Basic.R3F.Types where
+module React.Basic.R3F.Types
+  ( Clock
+  , Vector2
+  , class Object3D
+  , setPosition
+  , setRotation
+  , add
+  ) where
 
 import Prelude
 
@@ -12,6 +19,20 @@ foreign import data Clock :: Type
 
 foreign import getElapsedTime :: EffectFn1 Clock Number
 
-foreign import setPosition :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
-foreign import setRotation :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+-- | Represents the base class for most objects in `three.js`. It provides a set
+-- | of functions to manipulate objects in 3D space.
+class Object3D a where
+  setPosition :: EffectFn2 a (Fn3 Number Number Number (Array Number)) Unit
+  setRotation :: EffectFn2 a (Fn3 Number Number Number (Array Number)) Unit
+  -- | Adds an object as child of this object.
+  add :: EffectFn2 a JSX Unit
+
+instance object3DRefJSX :: Object3D (Ref JSX) where
+  setPosition = setPositionImpl
+  setRotation = setRotationImpl
+  add = addImpl
+
+foreign import setPositionImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import setRotationImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import addImpl :: EffectFn2 (Ref JSX) JSX Unit
 
