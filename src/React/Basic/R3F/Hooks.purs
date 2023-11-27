@@ -25,6 +25,21 @@ useFrame
   -> Hook (UseFrame (Record RootState)) Unit
 useFrame = unsafeHook <<< runEffectFn1 useFrameImpl <<< mkEffectFn2
 
+-- | Sets element properties
+-- |
+-- | For example:
+-- | ```
+-- |      applyRefProps cubeRef { position: [0.0, 0.0, 0.0 ] }
+-- | ```
+-- | If want to reach into the nested properties, use dash-case:
+-- | ```
+-- |      applyRefProps cubeRef { position-x: 0.0 }
+-- | ```
+-- |
+-- | Caveat: the underlying `@react-three/fiber` function seems to have
+-- | performance issue. Do not use it inside `useFramce` callbacks. In one such
+-- | case, setting position and rotation of two objects inside `useFrame` sees
+-- | fps drops from 144+ to around 100.
 applyRefProps
   :: forall props
    . Ref JSX

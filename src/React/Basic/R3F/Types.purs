@@ -21,18 +21,26 @@ foreign import getElapsedTime :: EffectFn1 Clock Number
 
 -- | Represents the base class for most objects in `three.js`. It provides a set
 -- | of functions to manipulate objects in 3D space.
-class Object3D a where
+class Object3D a b | a -> b where
   setPosition :: EffectFn2 a (Fn3 Number Number Number (Array Number)) Unit
   setRotation :: EffectFn2 a (Fn3 Number Number Number (Array Number)) Unit
   -- | Adds an object as child of this object.
-  add :: EffectFn2 a JSX Unit
+  add :: EffectFn2 a b Unit
 
-instance object3DRefJSX :: Object3D (Ref JSX) where
+instance object3DRefJSX :: Object3D (Ref JSX) JSX where
+  setPosition = setPositionByRefImpl
+  setRotation = setRotationByRefImpl
+  add = addByRefImpl
+
+instance object3DJSX :: Object3D JSX JSX where
   setPosition = setPositionImpl
   setRotation = setRotationImpl
   add = addImpl
 
-foreign import setPositionImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
-foreign import setRotationImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
-foreign import addImpl :: EffectFn2 (Ref JSX) JSX Unit
+foreign import setPositionByRefImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import setRotationByRefImpl :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import addByRefImpl :: EffectFn2 (Ref JSX) JSX Unit
+foreign import setPositionImpl :: EffectFn2 JSX (Fn3 Number Number Number (Array Number)) Unit
+foreign import setRotationImpl :: EffectFn2 JSX (Fn3 Number Number Number (Array Number)) Unit
+foreign import addImpl :: EffectFn2 JSX JSX Unit
 
