@@ -1,7 +1,7 @@
 # purescript-react-basic-r3f
 
 A purescript `@react-three/fiber` binding, which in turn is a react renderer for
-`three.js`, a javascript 3D library.
+`three.js`, a 3D library.
 
 ## Caveat
 

@@ -11,14 +11,18 @@ import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn2, runEffectFn1, runEff
 import Prim.Row (class Cons)
 import React.Basic (JSX, Ref)
 import React.Basic.Hooks (Hook, unsafeHook)
+import React.Basic.R3F (Scene)
 import React.Basic.R3F.Misc (Scene) as Three
-import React.Basic.R3F.Types (Clock, Vector2) as Three
+import React.Basic.R3F.Types (Clock, Vector2, WebGLRenderer) as Three
+import React.Basic.R3F.Types (WebGLRenderer)
 import Type.Prelude (Proxy)
+import Unsafe.Coerce (unsafeCoerce)
 
 type RootState =
   ( clock :: Three.Clock
   , pointer :: Three.Vector2
   , scene :: Three.Scene
+  , renderer :: Three.WebGLRenderer
   )
 
 useFrame
@@ -44,11 +48,11 @@ useThree k = unsafeHook $ runEffectFn1 useThreeImpl getter
 -- |
 -- | For example:
 -- | ```
--- |      applyRefProps cubeRef { position: [0.0, 0.0, 0.0 ] }
+-- |      applyProps cubeRef { position: [0.0, 0.0, 0.0 ] }
 -- | ```
 -- | If want to reach into the nested properties, use dash-case:
 -- | ```
--- |      applyRefProps cubeRef { position-x: 0.0 }
+-- |      applyProps cubeRef { position-x: 0.0 }
 -- | ```
 -- |
 -- | Caveat: the underlying `@react-three/fiber` function seems to have
@@ -56,12 +60,20 @@ useThree k = unsafeHook $ runEffectFn1 useThreeImpl getter
 -- | case, setting position and rotation of two objects inside `useFrame` with
 -- | this function sees fps drops from 144+ to around 100. Only fallack to this
 -- | function if there are no corresponding functions in `Object3D` type class.
-applyRefProps
-  :: forall props
-   . Ref JSX
-  -> Record props
-  -> Effect Unit
-applyRefProps = runEffectFn2 applyRefPropsImpl
+class ApplyProps a where
+  applyProps :: forall props. a -> Record props -> Effect Unit
+
+instance applyPropsRefJSX :: ApplyProps (Ref JSX) where
+  applyProps = runEffectFn2 applyRefPropsImpl
+
+instance applyPropsJSX :: ApplyProps JSX where
+  applyProps = runEffectFn2 applyPropsImpl
+
+instance applyPropsScene :: ApplyProps Scene where
+  applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
+
+instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
+  applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
 
 foreign import data UseFrame :: Type -> Type -> Type
 foreign import data UseThree :: Type -> Type -> Type
@@ -71,6 +83,9 @@ foreign import useFrameImpl
 
 foreign import useThreeImpl
   :: forall subset. EffectFn1 ((Record RootState) -> subset) subset
+
+foreign import applyPropsImpl
+  :: forall props. EffectFn2 JSX (Record props) Unit
 
 foreign import applyRefPropsImpl
   :: forall props. EffectFn2 (Ref JSX) (Record props) Unit
