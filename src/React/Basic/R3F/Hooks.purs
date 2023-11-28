@@ -15,7 +15,7 @@ import React.Basic.R3F (Scene)
 import React.Basic.R3F.Misc (Scene) as Three
 import React.Basic.R3F.Types (Clock, Vector2, WebGLRenderer) as Three
 import React.Basic.R3F.Types (WebGLRenderer)
-import Type.Prelude (Proxy)
+import Type.Prelude (Proxy(..))
 import Unsafe.Coerce (unsafeCoerce)
 
 type RootState =
@@ -34,16 +34,15 @@ useThree
   :: forall @k v props
    . IsSymbol k
   => Cons k v props RootState
-  => Proxy k
-  -> (v -> Effect v)
+  => (v -> Effect v)
   -> Hook (UseThree v) v
-useThree k f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
+useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
   where
   getter :: Record RootState -> v
   getter = Lens.view lens
 
   lens :: Lens' (Record RootState) v
-  lens = prop k
+  lens = prop (Proxy :: _ k)
 
 -- | Sets element properties
 -- |
