@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "format": "purs-tidy format-in-place src/**/*.purs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

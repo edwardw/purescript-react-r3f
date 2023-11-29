@@ -29,5 +29,5 @@ meshLambertMaterial
 meshLambertMaterial = element (threejs "MeshLambertMaterial")
 
 threejs :: forall props. String -> ReactComponent { | props }
-threejs = unsafeCreateDOMComponent >>> unsafePerformEffect
+threejs = unsafePerformEffect <<< unsafeCreateDOMComponent
 
