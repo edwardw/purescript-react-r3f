@@ -5,41 +5,50 @@
 -- | up.
 module React.Basic.R3F.Controls.LilGUI
   ( GUI
+  , Controller
   , create
   , add
   , addFolder
-  , Controls(..)
+  , name
+  , LilGUIControls(..)
   ) where
-
-import Prelude
 
 import Data.Symbol (class IsSymbol, reflectSymbol)
 import Effect (Effect)
-import Effect.Uncurried (EffectFn2, EffectFn4, runEffectFn4)
+import Effect.Uncurried (EffectFn2, EffectFn4, runEffectFn2, runEffectFn4)
 import Prim.Row (class Cons)
 import Type.Prelude (Proxy(..))
 
 foreign import data GUI :: Type
+foreign import data Controller :: Type
 
-data Controls a
+data LilGUIControls a
   = Checkbox
   | TextField String
   | NumberField Number Number Number
-  | Button (Effect Unit)
+  | Button
   | Dropdown (Array a)
 
 foreign import create :: Effect GUI
 foreign import addImpl
-  :: forall a props. EffectFn4 String GUI (Record props) (Controls a) Unit
-foreign import addFolder :: EffectFn2 GUI String GUI
+  :: forall a props. EffectFn4 String (Record props) (LilGUIControls a) GUI Controller
+
+foreign import addFolderImpl :: EffectFn2 String GUI GUI
+foreign import nameImpl :: EffectFn2 String Controller Controller
 
 add
   :: forall @prop v props_ props a
    . IsSymbol prop
   => Cons prop v props_ props
-  => GUI
-  -> Record props
-  -> Controls a
-  -> Effect Unit
+  => (Record props)
+  -> (LilGUIControls a)
+  -> GUI
+  -> Effect Controller
 add = runEffectFn4 addImpl (reflectSymbol (Proxy :: _ prop))
+
+addFolder :: String -> GUI -> Effect GUI
+addFolder = runEffectFn2 addFolderImpl
+
+name :: String -> Controller -> Effect Controller
+name = runEffectFn2 nameImpl
 
