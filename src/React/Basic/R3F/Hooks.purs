@@ -23,6 +23,7 @@ type RootState =
   , pointer :: Three.Vector2
   , scene :: Three.Scene
   , gl :: Three.WebGLRenderer
+  , invalidate :: Effect Unit
   )
 
 useFrame
@@ -75,8 +76,13 @@ instance applyPropsScene :: ApplyProps Scene where
 instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
   applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
 
+-- | The camera helper visualizes the frustum of a camera.
+useCameraHelper :: forall a b. { camera :: a } -> Hook (UseHelper b) Unit
+useCameraHelper = unsafeHook <<< runEffectFn1 useCameraHelperImpl
+
 foreign import data UseFrame :: Type -> Type -> Type
 foreign import data UseThree :: Type -> Type -> Type
+foreign import data UseHelper :: Type -> Type -> Type
 
 foreign import useFrameImpl
   :: EffectFn1 (EffectFn2 (Record RootState) Number Unit) Unit
@@ -89,4 +95,6 @@ foreign import applyPropsImpl
 
 foreign import applyRefPropsImpl
   :: forall props. EffectFn2 (Ref JSX) (Record props) Unit
+
+foreign import useCameraHelperImpl :: forall a. EffectFn1 { camera :: a } Unit
 

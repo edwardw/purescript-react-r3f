@@ -20,32 +20,32 @@
 import React from "react"
 
 export const gridHelperImpl = (args) => (props) => () => {
-  const args_ = {
-    size: args.size,
-    divisions: args.divisions,
-    colorCenterLine: args.colorCenterLine,
-    colorGrid: args.colorGrid,
-  }
+  const args_ = [
+    args.size,
+    args.divisions,
+    args.colorCenterLine,
+    args.colorGrid
+  ]
 
-  return jsx("GridHelper", args_, props)
+  return threeToJSX("GridHelper", args_, props)
 }
 
 export const polarGridHelperImpl = (args) => (props) => () => {
-  const args_ = {
-    radius: args.radius,
-    sectors: args.sectors,
-    rings: args.rings,
-    divisions: args.divisions,
-    color1: args.color1,
-    color2: args.color2,
-  }
+  const args_ = [
+    args.radius,
+    args.sectors,
+    args.rings,
+    args.divisions,
+    args.color1,
+    args.color2
+  ]
 
-  return jsx("PolarGridHelper", args_, props)
+  return threeToJSX("PolarGridHelper", args_, props)
 }
 
-function jsx(name, args, props) {
+export function threeToJSX(name, args, props) {
   const c = createComponent(name)
-  return element(c)({ args: Object.values(args), ...props })
+  return element(c)({ args: args, ...props })
 }
 
 function createComponent(el) {
