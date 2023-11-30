@@ -11,7 +11,7 @@ module React.Basic.R3F.Misc
 import Prelude
 
 import Effect (Effect)
-import Effect.Uncurried (EffectFn1)
+import Effect.Uncurried (EffectFn1, runEffectFn1)
 import Effect.Unsafe (unsafePerformEffect)
 import Prim.Row (class Union)
 import React.Basic (JSX, ReactComponent, element)
@@ -25,14 +25,15 @@ type Props_fog = (color :: String, near :: Number, far :: Number)
 foreign import data Scene :: Type
 foreign import data Fog :: Type
 
-foreign import createFogImpl :: forall props. EffectFn1 (Record props) Fog
 foreign import createScene :: Effect Scene
+foreign import createFogImpl :: forall props. EffectFn1 (Record props) Fog
 
 createFog
   :: forall props props_
    . Union props props_ Props_fog
-  => EffectFn1 (Record props) Fog
-createFog = createFogImpl
+  => (Record props)
+  -> Effect Fog
+createFog = runEffectFn1 createFogImpl
 
 group
   :: forall props

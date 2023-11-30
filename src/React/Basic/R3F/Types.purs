@@ -3,6 +3,8 @@ module React.Basic.R3F.Types
   , Vector2
   , WebGLRenderer
   , class Object3D
+  , Color
+  , createColor
   , setPosition
   , setRotation
   , add
@@ -14,7 +16,8 @@ import Prelude
 import Data.Enum (class BoundedEnum, class Enum, Cardinality(..))
 import Data.Function.Uncurried (Fn3)
 import Data.Maybe (Maybe(..))
-import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn2, runEffectFn2)
+import Effect (Effect)
+import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn2, runEffectFn1, runEffectFn2)
 import React.Basic (JSX, Ref)
 import React.Basic.R3F (Scene)
 import Unsafe.Coerce (unsafeCoerce)
@@ -23,6 +26,7 @@ foreign import data Vector2 :: Type
 foreign import data Vector3 :: Type
 foreign import data Clock :: Type
 foreign import data WebGLRenderer :: Type
+foreign import data Color :: Type
 
 foreign import getElapsedTime :: EffectFn1 Clock Number
 
@@ -86,4 +90,9 @@ foreign import addByRefImpl :: EffectFn2 (Ref JSX) JSX Unit
 foreign import setPositionImpl :: EffectFn2 JSX (Fn3 Number Number Number (Array Number)) Unit
 foreign import setRotationImpl :: EffectFn2 JSX (Fn3 Number Number Number (Array Number)) Unit
 foreign import addImpl :: EffectFn2 JSX JSX Unit
+
+foreign import createColorImpl :: EffectFn1 String Color
+
+createColor :: String -> Effect Color
+createColor = runEffectFn1 createColorImpl
 
