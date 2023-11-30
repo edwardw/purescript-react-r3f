@@ -76,6 +76,9 @@ instance applyPropsScene :: ApplyProps Scene where
 instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
   applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
 
+invalidate :: Effect Unit
+invalidate = invalidateImpl
+
 foreign import data UseFrame :: Type -> Type -> Type
 foreign import data UseThree :: Type -> Type -> Type
 
@@ -90,4 +93,6 @@ foreign import applyPropsImpl
 
 foreign import applyRefPropsImpl
   :: forall props. EffectFn2 (Ref JSX) (Record props) Unit
+
+foreign import invalidateImpl :: Effect Unit
 

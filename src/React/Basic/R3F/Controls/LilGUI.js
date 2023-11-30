@@ -22,3 +22,7 @@ export const nameImpl = (name, controller) => {
   return controller.name(name)
 }
 
+export const onChangeImpl = (cb, controller) => {
+  return controller.onChange(cb)
+}
+

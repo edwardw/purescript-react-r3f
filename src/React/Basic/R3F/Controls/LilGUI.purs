@@ -12,12 +12,15 @@ module React.Basic.R3F.Controls.LilGUI
   , open
   , close
   , name
+  , onChange
   , LilGUIControls(..)
   ) where
 
+import Prelude
+
 import Data.Symbol (class IsSymbol, reflectSymbol)
 import Effect (Effect)
-import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn4, runEffectFn1, runEffectFn2, runEffectFn4)
+import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn4, mkEffectFn1, runEffectFn1, runEffectFn2, runEffectFn4)
 import Prim.Row (class Cons)
 import Type.Prelude (Proxy(..))
 
@@ -39,6 +42,7 @@ foreign import addFolderImpl :: EffectFn2 String GUI GUI
 foreign import openImpl :: EffectFn1 GUI GUI
 foreign import closeImpl :: EffectFn1 GUI GUI
 foreign import nameImpl :: EffectFn2 String Controller Controller
+foreign import onChangeImpl :: EffectFn2 (EffectFn1 String Unit) Controller Controller
 
 add
   :: forall @prop v props_ props a
@@ -61,4 +65,14 @@ close = runEffectFn1 closeImpl
 
 name :: String -> Controller -> Effect Controller
 name = runEffectFn2 nameImpl
+
+-- Subtle: `onChangeImpl` has a callback of signature
+--    EffectFn1 String Unit
+-- and `onChange`
+--    String -> Effect Unit
+-- If passing the curried version directly to `onChangeImpl`, the callback will
+-- have no effect since the js side tries to call it like so
+--    ((str) -> () -> { ... })()
+onChange :: (String -> Effect Unit) -> Controller -> Effect Controller
+onChange cb = runEffectFn2 onChangeImpl (mkEffectFn1 cb)
 
