@@ -12,9 +12,3 @@ export const createScene = () => {
   return scene
 }
 
-export const setSceneTexturesImpl = (props, scene) => {
-  scene.background = props.background
-  scene.environment = props.environment ?? null
-  return
-}
-

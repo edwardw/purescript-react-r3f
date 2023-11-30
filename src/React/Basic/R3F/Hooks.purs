@@ -1,4 +1,12 @@
-module React.Basic.R3F.Hooks where
+module React.Basic.R3F.Hooks
+  ( RootState
+  , useFrame
+  , useThree
+  , applyProps
+  , UseFrame
+  , UseThree
+  , class ApplyProps
+  ) where
 
 import Prelude
 
@@ -28,8 +36,8 @@ type RootState =
   )
 
 useFrame
-  :: ((Record RootState) -> Number -> Effect Unit)
-  -> Hook (UseFrame (Record RootState)) Unit
+  :: ({ | RootState } -> Number -> Effect Unit)
+  -> Hook (UseFrame { | RootState }) Unit
 useFrame = unsafeHook <<< runEffectFn1 useFrameImpl <<< mkEffectFn2
 
 useThree
@@ -40,10 +48,10 @@ useThree
   -> Hook (UseThree v) v
 useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
   where
-  getter :: Record RootState -> v
+  getter :: { | RootState } -> v
   getter = Lens.view lens
 
-  lens :: Lens' (Record RootState) v
+  lens :: Lens' { | RootState } v
   lens = prop (Proxy :: _ k)
 
 -- | Sets element properties
@@ -62,17 +70,8 @@ useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
 -- | case, setting position and rotation of two objects inside `useFrame` with
 -- | this function sees fps drops from 144+ to around 100. Only fallack to this
 -- | function if there are no corresponding functions in `Object3D` type class.
--- |
--- | It also may or may not work depending on the target and the properties one
--- | wants to set. For example, to set a scene's background to either some color
--- | or some texture, the former works while the latter doesn't:
--- | ```
--- |      applyProps scene { background: "White" }
--- |      texture <- useTexture "path/to/texture"
--- |      applyProps scene { background: texture }
--- | ```
 class ApplyProps a where
-  applyProps :: forall props. a -> Record props -> Effect Unit
+  applyProps :: forall props. a -> { | props } -> Effect Unit
 
 instance applyPropsRefJSX :: ApplyProps (Ref JSX) where
   applyProps = runEffectFn2 applyRefPropsImpl
@@ -81,7 +80,7 @@ instance applyPropsJSX :: ApplyProps JSX where
   applyProps = runEffectFn2 applyPropsImpl
 
 instance applyPropsScene :: ApplyProps Scene where
-  applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
+  applyProps = runEffectFn2 applyScenePropsImpl
 
 instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
   applyProps = \gl -> runEffectFn2 applyPropsImpl (unsafeCoerce gl)
@@ -89,23 +88,21 @@ instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
 instance applyPropsTexture :: ApplyProps Texture where
   applyProps = \texture -> runEffectFn2 applyPropsImpl (unsafeCoerce texture)
 
-invalidate :: Effect Unit
-invalidate = invalidateImpl
-
 foreign import data UseFrame :: Type -> Type -> Type
 foreign import data UseThree :: Type -> Type -> Type
 
 foreign import useFrameImpl
-  :: EffectFn1 (EffectFn2 (Record RootState) Number Unit) Unit
+  :: EffectFn1 (EffectFn2 { | RootState } Number Unit) Unit
 
 foreign import useThreeImpl
-  :: forall subset. EffectFn1 ((Record RootState) -> subset) subset
+  :: forall subset. EffectFn1 ({ | RootState } -> subset) subset
 
 foreign import applyPropsImpl
-  :: forall props. EffectFn2 JSX (Record props) Unit
+  :: forall props. EffectFn2 JSX { | props } Unit
 
 foreign import applyRefPropsImpl
-  :: forall props. EffectFn2 (Ref JSX) (Record props) Unit
+  :: forall props. EffectFn2 (Ref JSX) { | props } Unit
 
-foreign import invalidateImpl :: Effect Unit
+foreign import applyScenePropsImpl
+  :: forall props. EffectFn2 Scene { | props } Unit
 
