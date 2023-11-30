@@ -13,7 +13,7 @@ module React.Basic.R3F
 import React.Basic.R3F.Cameras (orthographicCamera, perspectiveCamera)
 import React.Basic.R3F.Controls (orbitControls)
 import React.Basic.R3F.Controls.LilGUI (LilGUIControls(..))
-import React.Basic.R3F.Controls.Helpers (Args_gridHelper, Args_polarGridHelper, axesHelper, gridHelper, polarGridHelper)
+import React.Basic.R3F.Controls.Helpers (Args_gridHelper, Args_polarGridHelper, UseHelper, axesHelper, gridHelper, polarGridHelper, useCameraHelper)
 import React.Basic.R3F.Lights (ambientLight, directionalLight, directionalLightShadow)
 import React.Basic.R3F.Materials (meshLambertMaterial, meshPhongMaterial, meshStandardMaterial)
 import React.Basic.R3F.Misc (createFog, createScene, Props_fog, Scene, Fog, stats, group)

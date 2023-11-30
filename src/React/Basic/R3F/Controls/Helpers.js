@@ -18,6 +18,8 @@
  * some as one sees fit.
  */
 import React from "react"
+import { useHelper } from "@react-three/drei"
+import * as Three from "three"
 
 export const gridHelperImpl = (args) => (props) => () => {
   const args_ = [
@@ -41,6 +43,11 @@ export const polarGridHelperImpl = (args) => (props) => () => {
   ]
 
   return threeToJSX("PolarGridHelper", args_, props)
+}
+
+export const useCameraHelperImpl = (props) => {
+  useHelper(props.camera, Three.CameraHelper)
+  return
 }
 
 export function threeToJSX(name, args, props) {
