@@ -12,6 +12,7 @@ import Prim.Row (class Cons)
 import React.Basic (JSX, Ref)
 import React.Basic.Hooks (Hook, unsafeHook)
 import React.Basic.R3F (Scene)
+import React.Basic.R3F.Loaders (Texture)
 import React.Basic.R3F.Misc (Scene) as Three
 import React.Basic.R3F.Types (Clock, Vector2, WebGLRenderer) as Three
 import React.Basic.R3F.Types (WebGLRenderer)
@@ -49,11 +50,11 @@ useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
 -- |
 -- | For example:
 -- | ```
--- |      applyProps cubeRef { position: [0.0, 0.0, 0.0 ] }
+-- |      applyProps cubeRef { position: [ 0.0, 0.0, 0.0 ] }
 -- | ```
 -- | If want to reach into the nested properties, use dash-case:
 -- | ```
--- |      applyProps cubeRef { position-x: 0.0 }
+-- |      applyProps cubeRef { "position-x": 0.0 }
 -- | ```
 -- |
 -- | Caveat: the underlying `@react-three/fiber` function seems to have
@@ -61,6 +62,15 @@ useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
 -- | case, setting position and rotation of two objects inside `useFrame` with
 -- | this function sees fps drops from 144+ to around 100. Only fallack to this
 -- | function if there are no corresponding functions in `Object3D` type class.
+-- |
+-- | It also may or may not work depending on the target and the properties one
+-- | wants to set. For example, to set a scene's background to either some color
+-- | or some texture, the former works while the latter doesn't:
+-- | ```
+-- |      applyProps scene { background: "White" }
+-- |      texture <- useTexture "path/to/texture"
+-- |      applyProps scene { background: texture }
+-- | ```
 class ApplyProps a where
   applyProps :: forall props. a -> Record props -> Effect Unit
 
@@ -74,7 +84,10 @@ instance applyPropsScene :: ApplyProps Scene where
   applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
 
 instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
-  applyProps = \scene -> runEffectFn2 applyPropsImpl (unsafeCoerce scene)
+  applyProps = \gl -> runEffectFn2 applyPropsImpl (unsafeCoerce gl)
+
+instance applyPropsTexture :: ApplyProps Texture where
+  applyProps = \texture -> runEffectFn2 applyPropsImpl (unsafeCoerce texture)
 
 invalidate :: Effect Unit
 invalidate = invalidateImpl
