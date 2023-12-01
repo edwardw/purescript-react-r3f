@@ -8,51 +8,51 @@ module React.Basic.R3F.Controls.LilGUI
   , Controller
   , create
   , add
+  , addColor
   , addFolder
   , open
   , close
   , name
   , onChange
-  , LilGUIControls(..)
+  , Controls(..)
   ) where
 
 import Prelude
 
 import Data.Symbol (class IsSymbol, reflectSymbol)
 import Effect (Effect)
-import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn4, mkEffectFn1, runEffectFn1, runEffectFn2, runEffectFn4)
+import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn3, EffectFn4, mkEffectFn1, runEffectFn1, runEffectFn2, runEffectFn3, runEffectFn4)
 import Prim.Row (class Cons)
 import Type.Prelude (Proxy(..))
 
 foreign import data GUI :: Type
 foreign import data Controller :: Type
 
-data LilGUIControls a
+data Controls a
   = Checkbox
   | TextField String
   | NumberField Number Number Number
   | Button
   | Dropdown (Array a)
 
-foreign import create :: Effect GUI
-foreign import addImpl
-  :: forall a props. EffectFn4 String (Record props) (LilGUIControls a) GUI Controller
-
-foreign import addFolderImpl :: EffectFn2 String GUI GUI
-foreign import openImpl :: EffectFn1 GUI GUI
-foreign import closeImpl :: EffectFn1 GUI GUI
-foreign import nameImpl :: EffectFn2 String Controller Controller
-foreign import onChangeImpl :: EffectFn2 (EffectFn1 String Unit) Controller Controller
-
 add
   :: forall @prop v props_ props a
    . IsSymbol prop
   => Cons prop v props_ props
-  => (Record props)
-  -> (LilGUIControls a)
+  => { | props }
+  -> (Controls a)
   -> GUI
   -> Effect Controller
 add = runEffectFn4 addImpl (reflectSymbol (Proxy :: _ prop))
+
+addColor
+  :: forall @prop v props_ props
+   . IsSymbol prop
+  => Cons prop v props_ props
+  => { | props }
+  -> GUI
+  -> Effect Controller
+addColor = runEffectFn3 addColorImpl (reflectSymbol (Proxy :: _ prop))
 
 addFolder :: String -> GUI -> Effect GUI
 addFolder = runEffectFn2 addFolderImpl
@@ -75,4 +75,17 @@ name = runEffectFn2 nameImpl
 --    ((str) -> () -> { ... })()
 onChange :: (String -> Effect Unit) -> Controller -> Effect Controller
 onChange cb = runEffectFn2 onChangeImpl (mkEffectFn1 cb)
+
+foreign import create :: Effect GUI
+foreign import addImpl
+  :: forall a props. EffectFn4 String { | props } (Controls a) GUI Controller
+
+foreign import addColorImpl
+  :: forall props. EffectFn3 String { | props } GUI Controller
+
+foreign import addFolderImpl :: EffectFn2 String GUI GUI
+foreign import openImpl :: EffectFn1 GUI GUI
+foreign import closeImpl :: EffectFn1 GUI GUI
+foreign import nameImpl :: EffectFn2 String Controller Controller
+foreign import onChangeImpl :: EffectFn2 (EffectFn1 String Unit) Controller Controller
 

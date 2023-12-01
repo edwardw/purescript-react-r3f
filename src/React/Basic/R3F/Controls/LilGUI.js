@@ -18,6 +18,10 @@ export const addFolderImpl = (title, gui) => {
   return gui.addFolder(title)
 }
 
+export const addColorImpl = (prop, obj, gui) => {
+  return gui.addColor(obj, prop)
+}
+
 export const nameImpl = (name, controller) => {
   return controller.name(name)
 }

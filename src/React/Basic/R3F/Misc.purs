@@ -26,18 +26,18 @@ foreign import data Scene :: Type
 foreign import data Fog :: Type
 
 foreign import createScene :: Effect Scene
-foreign import createFogImpl :: forall props. EffectFn1 (Record props) Fog
+foreign import createFogImpl :: forall props. EffectFn1 { | props } Fog
 
 createFog
   :: forall props props_
    . Union props props_ Props_fog
-  => (Record props)
+  => { | props }
   -> Effect Fog
 createFog = runEffectFn1 createFogImpl
 
 group
   :: forall props
-   . Record props
+   . { | props }
   -> JSX
 group = element (threejs "Group")
 
