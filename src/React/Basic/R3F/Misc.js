@@ -18,3 +18,5 @@ export const createScene = () => {
   return scene
 }
 
+export const nullImpl = null
+

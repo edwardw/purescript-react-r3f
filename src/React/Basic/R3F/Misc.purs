@@ -6,6 +6,8 @@ module React.Basic.R3F.Misc
   , Props_fog
   , stats
   , group
+  , Null
+  , null
   ) where
 
 import Prelude
@@ -45,4 +47,11 @@ threejs :: forall props. String -> ReactComponent { | props }
 threejs = unsafePerformEffect <<< unsafeCreateDOMComponent
 
 foreign import statsImpl :: forall props. ReactComponent { | props }
+
+-- purescript-literals has it, but seems to have bundling errors.
+foreign import data Null :: Type
+foreign import nullImpl :: Null
+
+null :: Null
+null = nullImpl
 
