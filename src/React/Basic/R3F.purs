@@ -14,7 +14,7 @@ import React.Basic.R3F.Controls (orbitControls)
 import React.Basic.R3F.Controls.Helpers (Args_gridHelper, Args_polarGridHelper, UseHelper, axesHelper, gridHelper, polarGridHelper, useCameraHelper)
 import React.Basic.R3F.Lights (ambientLight, directionalLight, directionalLightShadow)
 import React.Basic.R3F.Materials (meshLambertMaterial, meshNormalMaterial, meshPhongMaterial, meshStandardMaterial)
-import React.Basic.R3F.Misc (Fog, Null, Props_fog, Scene, createFog, createScene, group, null, stats)
+import React.Basic.R3F.Misc (Null, group, null, stats)
 import React.Basic.R3F.Shapes (boxGeometry, planeGeometry, torusKnotGeometry)
 import React.Basic.R3F.Web (canvas)
 

@@ -58,6 +58,11 @@ polarGridHelper
 polarGridHelper args = unsafePerformEffect <<< polarGridHelperImpl args
 
 -- | The camera helper visualizes the frustum of a camera.
+-- |
+-- | It usually makes little sense to attach a camera helper to the canvas
+-- | default camera. By definition, the default camera's frustum defines what
+-- | users see in the screen, i.e. it is fixed. So does the camera helper
+-- | attached to it, which won't be too interesting.
 useCameraHelper :: forall a b. { camera :: a } -> Hook (UseHelper b) Unit
 useCameraHelper = unsafeHook <<< runEffectFn1 useCameraHelperImpl
 

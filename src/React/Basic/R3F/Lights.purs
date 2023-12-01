@@ -4,11 +4,8 @@ module React.Basic.R3F.Lights
   , directionalLightShadow
   ) where
 
-import Prelude
-
-import Effect.Unsafe (unsafePerformEffect)
-import React.Basic (JSX, ReactComponent, element)
-import React.Basic.DOM (unsafeCreateDOMComponent)
+import React.Basic (JSX, element)
+import React.Basic.R3F.Three (threejs)
 
 ambientLight
   :: forall props
@@ -27,7 +24,4 @@ directionalLightShadow
    . Record props
   -> JSX
 directionalLightShadow = element (threejs "DirectionalLightShadow")
-
-threejs :: forall props. String -> ReactComponent { | props }
-threejs = unsafeCreateDOMComponent >>> unsafePerformEffect
 

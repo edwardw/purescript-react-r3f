@@ -19,11 +19,8 @@ import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn2, runEffectFn1, runEff
 import Prim.Row (class Cons)
 import React.Basic (JSX, Ref)
 import React.Basic.Hooks (Hook, unsafeHook)
-import React.Basic.R3F (Scene)
 import React.Basic.R3F.Loaders (Texture)
-import React.Basic.R3F.Misc (Scene) as Three
-import React.Basic.R3F.Types (Clock, Vector2, WebGLRenderer) as Three
-import React.Basic.R3F.Types (WebGLRenderer)
+import React.Basic.R3F.Three as Three
 import Type.Prelude (Proxy(..))
 import Unsafe.Coerce (unsafeCoerce)
 
@@ -41,18 +38,18 @@ useFrame
 useFrame = unsafeHook <<< runEffectFn1 useFrameImpl <<< mkEffectFn2
 
 useThree
-  :: forall @k v props
-   . IsSymbol k
-  => Cons k v props RootState
-  => (v -> Effect v)
-  -> Hook (UseThree v) v
+  :: forall @tag ty props
+   . IsSymbol tag
+  => Cons tag ty props RootState
+  => (ty -> Effect ty)
+  -> Hook (UseThree ty) ty
 useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
   where
-  getter :: { | RootState } -> v
+  getter :: { | RootState } -> ty
   getter = Lens.view lens
 
-  lens :: Lens' { | RootState } v
-  lens = prop (Proxy :: _ k)
+  lens :: Lens' { | RootState } ty
+  lens = prop (Proxy :: _ tag)
 
 -- | Sets element properties
 -- |
@@ -79,10 +76,10 @@ instance applyPropsRefJSX :: ApplyProps (Ref JSX) where
 instance applyPropsJSX :: ApplyProps JSX where
   applyProps = runEffectFn2 applyPropsImpl
 
-instance applyPropsScene :: ApplyProps Scene where
+instance applyPropsScene :: ApplyProps Three.Scene where
   applyProps = runEffectFn2 applyScenePropsImpl
 
-instance applyPropsWebGLRenderer :: ApplyProps WebGLRenderer where
+instance applyPropsWebGLRenderer :: ApplyProps Three.WebGLRenderer where
   applyProps = \gl -> runEffectFn2 applyPropsImpl (unsafeCoerce gl)
 
 instance applyPropsTexture :: ApplyProps Texture where
@@ -104,5 +101,5 @@ foreign import applyRefPropsImpl
   :: forall props. EffectFn2 (Ref JSX) { | props } Unit
 
 foreign import applyScenePropsImpl
-  :: forall props. EffectFn2 Scene { | props } Unit
+  :: forall props. EffectFn2 Three.Scene { | props } Unit
 

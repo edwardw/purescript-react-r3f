@@ -1,9 +1,5 @@
 import * as Three from "three"
 
-export const getElapsedTime = (clock) => {
-  return clock.getElapsedTime()
-}
-
 export const setPositionImpl = (el, f) => {
   const pos = el.position
   el.position.set(...f(...pos))
@@ -31,9 +27,5 @@ export const setRotationByRefImpl = (el, f) => {
 
 export const addByRefImpl = (parent, child) => {
   return addImpl(parent.current, child)
-}
-
-export const createColorImpl = (color) => {
-  return new Three.Color(color)
 }
 

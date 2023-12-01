@@ -5,11 +5,8 @@ module React.Basic.R3F.Materials
   , meshNormalMaterial
   ) where
 
-import Prelude
-
-import Effect.Unsafe (unsafePerformEffect)
-import React.Basic (JSX, ReactComponent, element)
-import React.Basic.DOM (unsafeCreateDOMComponent)
+import React.Basic (JSX, element)
+import React.Basic.R3F.Three (threejs)
 
 meshPhongMaterial
   :: forall props
@@ -34,7 +31,4 @@ meshNormalMaterial
    . { | props }
   -> JSX
 meshNormalMaterial = element (threejs "MeshNormalMaterial")
-
-threejs :: forall props. String -> ReactComponent { | props }
-threejs = unsafePerformEffect <<< unsafeCreateDOMComponent
 
