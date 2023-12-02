@@ -14,6 +14,7 @@ import React.Basic.DOM (unsafeCreateDOMComponent)
 
 foreign import data Vector2 :: Type
 foreign import data Vector3 :: Type
+foreign import data Matrix4 :: Type
 foreign import data Clock :: Type
 foreign import data Color :: Type
 foreign import data Scene :: Type

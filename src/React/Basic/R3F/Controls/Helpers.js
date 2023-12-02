@@ -46,7 +46,7 @@ export const polarGridHelperImpl = (args) => (props) => () => {
 }
 
 export const useCameraHelperImpl = (props) => {
-  useHelper(props.camera, Three.CameraHelper)
+  useHelper(props, Three.CameraHelper)
   return
 }
 

@@ -63,7 +63,7 @@ polarGridHelper args = unsafePerformEffect <<< polarGridHelperImpl args
 -- | default camera. By definition, the default camera's frustum defines what
 -- | users see in the screen, i.e. it is fixed. So does the camera helper
 -- | attached to it, which won't be too interesting.
-useCameraHelper :: forall a b. { camera :: a } -> Hook (UseHelper b) Unit
+useCameraHelper :: forall a b. a -> Hook (UseHelper b) Unit
 useCameraHelper = unsafeHook <<< runEffectFn1 useCameraHelperImpl
 
 threejs :: forall props. String -> ReactComponent { | props }
@@ -77,5 +77,5 @@ foreign import gridHelperImpl
 foreign import polarGridHelperImpl
   :: forall args props. { | args } -> { | props } -> Effect JSX
 
-foreign import useCameraHelperImpl :: forall a. EffectFn1 { camera :: a } Unit
+foreign import useCameraHelperImpl :: forall a. EffectFn1 a Unit
 

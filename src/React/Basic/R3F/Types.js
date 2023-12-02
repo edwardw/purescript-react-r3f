@@ -1,5 +1,3 @@
-import * as Three from "three"
-
 export const setPositionImpl = (el, f) => {
   const pos = el.position
   el.position.set(...f(...pos))
@@ -27,5 +25,23 @@ export const setRotationByRefImpl = (el, f) => {
 
 export const addByRefImpl = (parent, child) => {
   return addImpl(parent.current, child)
+}
+
+export const updateMatrixImpl = (el) => {
+  el.updateMatrix()
+  return
+}
+
+export const updateMatrixByRefImpl = (el) => {
+  el.current.updateMatrix()
+  return
+}
+
+export const matrixImpl = (el) => {
+  return el.matrix
+}
+
+export const matrixByRefImpl = (el) => {
+  return el.current.matrix
 }
 
