@@ -7,10 +7,7 @@ import Data.Enum (class BoundedEnum, class Enum, Cardinality(..))
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, runEffectFn1)
-import Effect.Unsafe (unsafePerformEffect)
 import Prim.Row (class Union)
-import React.Basic (ReactComponent)
-import React.Basic.DOM (unsafeCreateDOMComponent)
 
 foreign import data Vector2 :: Type
 foreign import data Vector3 :: Type
@@ -44,10 +41,17 @@ foreign import createSceneImpl :: Effect Scene
 foreign import createFogImpl :: forall props. EffectFn1 { | props } Fog
 
 -- =======================================
--- ==             Renderers             ==
+-- ==             Core                  ==
 -- =======================================
 
-foreign import data WebGLRenderer :: Type
+foreign import data BufferGeometry :: Type
+foreign import data Object3D :: Type
+
+-- =======================================
+-- ==             Cameras               ==
+-- =======================================
+
+foreign import data Camera :: Type
 
 -- =======================================
 -- ==             Materials             ==
@@ -55,6 +59,18 @@ foreign import data WebGLRenderer :: Type
 
 foreign import data Material :: Type
 foreign import meshNormalMaterial :: Effect Material
+
+-- =======================================
+-- ==             Objects               ==
+-- =======================================
+
+foreign import data Group :: Type
+
+-- =======================================
+-- ==             Renderers             ==
+-- =======================================
+
+foreign import data WebGLRenderer :: Type
 
 -- =======================================
 -- ==             Constants             ==
@@ -141,7 +157,4 @@ instance boundedEnumShadowMapType :: BoundedEnum ShadowMapType where
   fromEnum PCFShadowMap = 1
   fromEnum PCFSoftShadowMap = 2
   fromEnum VSMShadowMap = 3
-
-threejs :: forall props. String -> ReactComponent { | props }
-threejs = unsafePerformEffect <<< unsafeCreateDOMComponent
 

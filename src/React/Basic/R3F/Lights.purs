@@ -5,7 +5,7 @@ module React.Basic.R3F.Lights
   ) where
 
 import React.Basic (JSX, element)
-import React.Basic.R3F.Three (threejs)
+import React.Basic.R3F.Internal (threejs)
 
 ambientLight
   :: forall props

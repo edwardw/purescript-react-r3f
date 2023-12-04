@@ -3,27 +3,24 @@ module React.Basic.R3F.Controls.Helpers
   , gridHelper
   , polarGridHelper
   , useCameraHelper
-  , Args_gridHelper
-  , Args_polarGridHelper
   , UseHelper
   ) where
 
 import Prelude
 
-import Effect (Effect)
 import Effect.Uncurried (EffectFn1, runEffectFn1)
-import Effect.Unsafe (unsafePerformEffect)
+import Foreign (Foreign)
 import Prim.Row (class Union)
-import React.Basic (JSX, ReactComponent, element)
-import React.Basic.DOM (unsafeCreateDOMComponent)
+import React.Basic (JSX, element)
 import React.Basic.Hooks (Hook, unsafeHook)
+import React.Basic.R3F.Internal (elementWithArgs, threejs)
 
 -- | A simple axis object to visualize the three axes.
 -- | The x, y and z axes are red, green and blue, respectively.
 axesHelper :: Number -> JSX
 axesHelper size = element (threejs "AxesHelper") { args: [ size ] }
 
-type Args_gridHelper =
+type GridHelperArgs =
   ( size :: Number
   , divisions :: Number
   , colorCenterLine :: String
@@ -33,13 +30,13 @@ type Args_gridHelper =
 -- | A two-dimensional grid.
 gridHelper
   :: forall args args_ props
-   . Union args args_ Args_gridHelper
+   . Union args args_ GridHelperArgs
   => { | args }
   -> { | props }
   -> JSX
-gridHelper args = unsafePerformEffect <<< gridHelperImpl args
+gridHelper = elementWithArgs (threejs "GridHelper") gridHelperArgs
 
-type Args_polarGridHelper =
+type PolarGridHelperArgs =
   ( radius :: Number
   , sectors :: Number
   , rings :: Number
@@ -51,11 +48,11 @@ type Args_polarGridHelper =
 -- | A two-dimensional polar grid.
 polarGridHelper
   :: forall args args_ props
-   . Union args args_ Args_polarGridHelper
+   . Union args args_ PolarGridHelperArgs
   => { | args }
   -> { | props }
   -> JSX
-polarGridHelper args = unsafePerformEffect <<< polarGridHelperImpl args
+polarGridHelper = elementWithArgs (threejs "PolarGridHelper") polarGridHelperArgs
 
 -- | The camera helper visualizes the frustum of a camera.
 -- |
@@ -66,16 +63,10 @@ polarGridHelper args = unsafePerformEffect <<< polarGridHelperImpl args
 useCameraHelper :: forall a b. a -> Hook (UseHelper b) Unit
 useCameraHelper = unsafeHook <<< runEffectFn1 useCameraHelperImpl
 
-threejs :: forall props. String -> ReactComponent { | props }
-threejs = unsafePerformEffect <<< unsafeCreateDOMComponent
+foreign import gridHelperArgs :: forall args. { | args } -> Foreign
+foreign import polarGridHelperArgs :: forall args. { | args } -> Foreign
 
 foreign import data UseHelper :: Type -> Type -> Type
-
-foreign import gridHelperImpl
-  :: forall args props. { | args } -> { | props } -> Effect JSX
-
-foreign import polarGridHelperImpl
-  :: forall args props. { | args } -> { | props } -> Effect JSX
 
 foreign import useCameraHelperImpl :: forall a. EffectFn1 a Unit
 

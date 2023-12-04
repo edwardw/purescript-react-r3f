@@ -7,7 +7,7 @@ module React.Basic.R3F.Misc
   ) where
 
 import React.Basic (JSX, ReactComponent, element)
-import React.Basic.R3F.Three (threejs)
+import React.Basic.R3F.Internal (threejs)
 
 stats :: JSX
 stats = element statsImpl {}

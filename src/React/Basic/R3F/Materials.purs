@@ -6,7 +6,7 @@ module React.Basic.R3F.Materials
   ) where
 
 import React.Basic (JSX, element)
-import React.Basic.R3F.Three (threejs)
+import React.Basic.R3F.Internal (threejs)
 
 meshPhongMaterial
   :: forall props

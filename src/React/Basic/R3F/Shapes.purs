@@ -2,29 +2,37 @@ module React.Basic.R3F.Shapes
   ( boxGeometry
   , planeGeometry
   , torusKnotGeometry
+  , mesh
   ) where
 
 import React.Basic (JSX, ReactComponent, element)
-
-foreign import boxGeometry_ :: forall props. ReactComponent { | props }
-foreign import planeGeometry_ :: forall props. ReactComponent { | props }
-foreign import torusKnotGeometry_ :: forall props. ReactComponent { | props }
+import React.Basic.R3F.Internal (threejs)
 
 boxGeometry
   :: forall props
-   . Record props
+   . { | props }
   -> JSX
-boxGeometry = element boxGeometry_
+boxGeometry = element boxGeometryImpl
 
 planeGeometry
   :: forall props
-   . Record props
+   . { | props }
   -> JSX
-planeGeometry = element planeGeometry_
+planeGeometry = element planeGeometryImpl
 
 torusKnotGeometry
   :: forall props
-   . Record props
+   . { | props }
   -> JSX
-torusKnotGeometry = element torusKnotGeometry_
+torusKnotGeometry = element torusKnotGeometryImpl
+
+mesh
+  :: forall props
+   . { | props }
+  -> JSX
+mesh = element (threejs "Mesh")
+
+foreign import boxGeometryImpl :: forall props. ReactComponent { | props }
+foreign import planeGeometryImpl :: forall props. ReactComponent { | props }
+foreign import torusKnotGeometryImpl :: forall props. ReactComponent { | props }
 

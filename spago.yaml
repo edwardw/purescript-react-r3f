@@ -2,6 +2,7 @@ package:
   dependencies:
     - console
     - effect
+    - foreign
     - functions
     - prelude
     - profunctor-lenses
