@@ -3,6 +3,7 @@ module React.Basic.R3F.Loaders
   , UseLoader
   , useTexture
   , useGLTF
+  , useEnvironment
   ) where
 
 import Prelude
@@ -36,25 +37,32 @@ useTexture = unsafeHook <<< runEffectFn1 useTextureImpl
 -- | which can roughly be translated to:
 -- |
 -- | ```
--- |    { nodes } <- useGLTF "/path/to/glb-file"
--- |    pure $ R3F.group
--- |      { children:
--- |          [ R3F.mesh.
--- |              { geometry: nodes."Object_4".geometry
--- |              , material: nodes."Object_4".material
--- |              , position: nodes."Object_4".position
--- |              , rotation: nodes."Object_4".rotation
--- |              , scale: nodes."Object_4".scale
--- |              }
--- |          , R3F.mesh { ... }
--- |          ]
--- |      }
+-- |  { nodes } <- useGLTF "/path/to/glb-file"
+-- |  pure $ R3F.group
+-- |    { children:
+-- |        [ R3F.mesh
+-- |            { geometry: nodes."Object_4".geometry
+-- |            , material: nodes."Object_4".material
+-- |            , position: nodes."Object_4".position
+-- |            , rotation: nodes."Object_4".rotation
+-- |            , scale: nodes."Object_4".scale
+-- |            }
+-- |        , R3F.mesh { ... }
+-- |        ]
+-- |    }
 -- | ```
 useGLTF :: forall hooks a. String -> Hook (UseLoader hooks) a
 useGLTF = unsafeHook <<< runEffectFn1 useGLTFImpl
+
+-- | An environment map loader.
+-- |
+-- | Usually in `hdr` or `exr` format.
+useEnvironment :: forall hooks. String -> Hook (UseLoader hooks) Texture
+useEnvironment file = unsafeHook $ runEffectFn1 useEnvImpl { files: file }
 
 foreign import data UseLoader :: Type -> Type -> Type
 
 foreign import useTextureImpl :: EffectFn1 String Texture
 foreign import useGLTFImpl :: forall a. EffectFn1 String a
+foreign import useEnvImpl :: forall props. EffectFn1 { | props } Texture
 
