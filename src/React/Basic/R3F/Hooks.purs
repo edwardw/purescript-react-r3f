@@ -41,9 +41,8 @@ useThree
   :: forall @tag ty props
    . IsSymbol tag
   => Cons tag ty props RootState
-  => (ty -> Effect ty)
-  -> Hook (UseThree ty) ty
-useThree f = unsafeHook $ runEffectFn1 useThreeImpl getter >>= f
+  => Hook (UseThree ty) ty
+useThree = unsafeHook $ runEffectFn1 useThreeImpl getter
   where
   getter :: { | RootState } -> ty
   getter = Lens.view lens

@@ -27,8 +27,9 @@ useTexture = unsafeHook <<< runEffectFn1 useTextureImpl
 -- |    const { nodes, materials } = useGLTF('/path/to/glb-file')
 -- |    return (
 -- |      <group {...props} dispose={null}>
--- |        <mesh geometry={nodes.Object_4.geometry} material={materials['name1']} position={[0, 0, 2]} rotation={[-2, 0, Math.PI]} scale={[0.8, 0.7, 0.8]} />
--- |        <mesh geometry={nodes.Object_5.geometry} material={materials['name2']} position={[0, 0, 2.5]} rotation={[-2, 0, Math.PI]} scale={[0.8, 0.7, 0.8]} />
+-- |        <mesh geometry={nodes.Object_4.geometry} material={materials['name1']} ... />
+-- |        <mesh geometry={nodes.Object_5.geometry} material={materials['name2']} ... />
+-- |        <... more meshes>
 -- |      </group>
 -- |    )
 -- |  }
@@ -40,14 +41,9 @@ useTexture = unsafeHook <<< runEffectFn1 useTextureImpl
 -- |  { nodes } <- useGLTF "/path/to/glb-file"
 -- |  pure $ R3F.group
 -- |    { children:
--- |        [ R3F.mesh
--- |            { geometry: nodes."Object_4".geometry
--- |            , material: nodes."Object_4".material
--- |            , position: nodes."Object_4".position
--- |            , rotation: nodes."Object_4".rotation
--- |            , scale: nodes."Object_4".scale
--- |            }
--- |        , R3F.mesh { ... }
+-- |        [ R3F.mesh nodes."Object_4"
+-- |        , R3F.mesh nodes."Object_5"
+-- |        , ...
 -- |        ]
 -- |    }
 -- | ```
