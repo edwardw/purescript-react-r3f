@@ -9,6 +9,7 @@ import Foreign (Foreign)
 import React.Basic (JSX, ReactComponent)
 import React.Basic.DOM (unsafeCreateDOMComponent)
 import Type.Prelude (Proxy(..))
+import Type.Regex (class TestRegex)
 
 elementWithArgs
   :: forall args props
@@ -19,8 +20,15 @@ elementWithArgs
   -> JSX
 elementWithArgs = runFn4 elementImpl
 
-extend :: forall @name a. IsSymbol name => a -> Unit
+extend
+  :: forall @name a
+   . IsSymbol name
+  => TestRegex StartWithUppercase name
+  => a
+  -> Unit
 extend = runFn2 extendImpl (reflectSymbol (Proxy :: _ name))
+
+type StartWithUppercase = "^[A-Z][.]*"
 
 threejs :: forall props. String -> ReactComponent { | props }
 threejs = unsafePerformEffect <<< unsafeCreateDOMComponent

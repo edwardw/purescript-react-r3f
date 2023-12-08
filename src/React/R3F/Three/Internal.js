@@ -25,9 +25,20 @@ export const elementImpl = (component, toArray, args, props) => {
 }
 
 export const extendImpl = (name, klass) => {
-  const obj = {}
-  obj[name] = klass
-  extend(obj)
+  var extendOnce = (function() {
+    var dict = {}
+    return function() {
+      if (dict[name] === undefined) {
+        dict[name] = true
+
+        const obj = {}
+        obj[name] = klass
+        extend(obj)
+      }
+    }
+  })()
+
+  extendOnce()
   return
 }
 
