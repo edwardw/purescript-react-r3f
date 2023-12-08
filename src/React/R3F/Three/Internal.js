@@ -17,9 +17,17 @@
  * some as one sees fit.
  */
 import React from "react"
+import { extend } from "@react-three/fiber"
 
 export const elementImpl = (component, toArray, args, props) => {
   const argArray = toArray(args)
   return React.createElement(component, { args: argArray, ...props})
+}
+
+export const extendImpl = (name, klass) => {
+  const obj = {}
+  obj[name] = klass
+  extend(obj)
+  return
 }
 

@@ -8,6 +8,8 @@ import Effect.Uncurried (EffectFn1, runEffectFn1)
 -- =======================================
 
 foreign import data Object3D :: Type
+foreign import data BufferGeometry :: Type
+foreign import data InstancedBufferAttribute :: Type
 
 foreign import createObject3D :: Effect Object3D
 
@@ -34,5 +36,12 @@ foreign import data MeshLambertMaterial :: Type
 -- ==             Math                  ==
 -- =======================================
 
+foreign import data Color :: Type
 foreign import data Matrix4 :: Type
+foreign import data Vector3 :: Type
+
+createVector3 :: Array Number -> Effect Vector3
+createVector3 = runEffectFn1 createVector3Impl
+
+foreign import createVector3Impl :: EffectFn1 (Array Number) Vector3
 
