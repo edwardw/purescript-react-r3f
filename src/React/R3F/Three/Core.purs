@@ -14,13 +14,13 @@ class Object3D a where
   setPosition :: a -> (Number -> Number -> Number -> (Array Number)) -> Effect Unit
   setRotation :: a -> (Number -> Number -> Number -> (Array Number)) -> Effect Unit
   updateMatrix :: a -> Effect Unit
-  matrix :: a -> Effect Matrix4
+  getMatrix :: a -> Effect Matrix4
 
 instance object3DSelf :: Object3D Object3D where
   setPosition = \obj -> runEffectFn2 setPositionImpl obj <<< mkFn3
   setRotation = \obj -> runEffectFn2 setRotationImpl obj <<< mkFn3
   updateMatrix = runEffectFn1 object3DUpdateMatrix
-  matrix = runEffectFn1 object3DMatrix
+  getMatrix = runEffectFn1 object3DMatrix
 
 instancedBufferAttribute
   :: forall args props

@@ -1,3 +1,6 @@
+import React from "react"
+import { extend } from "@react-three/fiber"
+
 /**
  * Most three.js components' constructors have arguments. In react-three/fiber
  * world, the arguments are passed through an array property names `args`, e.g.
@@ -16,9 +19,6 @@
  * with the convenience of specifying the arguments out of order and omitting
  * some as one sees fit.
  */
-import React from "react"
-import { extend } from "@react-three/fiber"
-
 export const elementImpl = (component, toArray, args, props) => {
   const argArray = toArray(args)
   return React.createElement(component, { args: argArray, ...props})

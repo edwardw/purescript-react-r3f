@@ -4,7 +4,7 @@ export const flattenBoxArgs = (args) => {
     args.height,
     args.depth,
     args.widthSegments,
-    args.heightAegments,
+    args.heightSegments,
     args.depthSegments,
   ]
 }

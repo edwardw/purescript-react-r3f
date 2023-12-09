@@ -10,11 +10,14 @@ package:
     - react-basic-dom
     - react-basic-hooks
     - typelevel-regex
+    - untagged-union
   name: react-basic-three
   test:
     dependencies: []
     main: Test.Main
 workspace:
   extra_packages: {}
+  build_opts:
+    censor_library_warnings: all
   package_set:
-    registry: 46.1.1
+    registry: 47.2.0
