@@ -5,26 +5,58 @@ import Prelude
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn3, runEffectFn1, runEffectFn2, runEffectFn3)
 import Foreign (Foreign)
+import Prim.Row (class Union)
 import React.Basic (JSX, Ref, element)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
-import React.R3F.Three.Types (BufferGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh)
+import React.R3F.Three.Types (BufferGeometry, InstancedBufferAttribute, InstancedMesh, Material, Matrix4, Mesh)
 
+-- | To group objects together.
+-- |
+-- | Other that making the group syntactically clearer, it has no rendering
+-- | impact.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/objects/Group)
 group
   :: forall props
    . { | props }
   -> JSX
 group = element (threejs "Group")
 
+type MeshArgs =
+  ( geometry :: BufferGeometry
+  , material :: Material
+  )
+
+-- | A polygon mesh.
+-- |
+-- | It takes a geometry and applies a material to it, which can then be
+-- | rendered.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/objects/Mesh)
 mesh
-  :: forall args props
-   . { | args }
+  :: forall args args_ props
+   . Union args args_ MeshArgs
+  => { | args }
   -> { | props }
   -> JSX
 mesh = elementWithArgs (threejs "Mesh") flattenMeshArgs
 
+type InstancedMeshArgs =
+  ( geometry :: BufferGeometry
+  , material :: Material
+  , count :: Int
+  )
+
+-- | A special version of Mesh which supports instanced rendering.
+-- |
+-- | Use it if you want to render a large number of objects with the same
+-- | geometry and material.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/objects/InstancedMesh)
 instancedMesh
-  :: forall args props
-   . { | args }
+  :: forall args args_ props
+   . Union args args_ InstancedMeshArgs
+  => { | args }
   -> { | props }
   -> JSX
 instancedMesh = elementWithArgs (threejs "InstancedMesh") flattenInstancedMeshArgs

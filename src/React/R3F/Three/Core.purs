@@ -2,10 +2,12 @@ module React.R3F.Three.Core where
 
 import Prelude
 
+import Data.ArrayBuffer.Types (ArrayView)
 import Data.Function.Uncurried (Fn3, mkFn3)
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn2, runEffectFn1, runEffectFn2)
 import Foreign (Foreign)
+import Prim.Row (class Union)
 import React.Basic (JSX)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
 import React.R3F.Three.Types (Matrix4, Object3D)
@@ -22,9 +24,20 @@ instance object3DSelf :: Object3D Object3D where
   updateMatrix = runEffectFn1 object3DUpdateMatrix
   getMatrix = runEffectFn1 object3DMatrix
 
+type InstancedBufferAttributeArgs a =
+  ( array :: ArrayView a
+  , itemSize :: Int
+  , normalized :: Boolean
+  , meshPerAttribute :: Int
+  )
+
+-- | An instanced version of BufferAttribute.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/core/InstancedBufferAttribute)
 instancedBufferAttribute
-  :: forall args props
-   . { | args }
+  :: forall a args args_ props
+   . Union args args_ (InstancedBufferAttributeArgs a)
+  => { | args }
   -> { | props }
   -> JSX
 instancedBufferAttribute =
