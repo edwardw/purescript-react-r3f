@@ -7,8 +7,10 @@ import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn3, runEffectFn1, runEffec
 import Foreign (Foreign)
 import Prim.Row (class Union)
 import React.Basic (JSX, Ref, element)
+import React.R3F.Three.Core (class Object3D)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
-import React.R3F.Three.Types (BufferGeometry, InstancedBufferAttribute, InstancedMesh, Material, Matrix4, Mesh)
+import React.R3F.Three.Types (BufferGeometry, InstancedBufferAttribute, InstancedMesh, LOD, Material, Matrix4, Mesh)
+import Unsafe.Coerce (unsafeCoerce)
 
 -- | To group objects together.
 -- |
@@ -60,6 +62,28 @@ instancedMesh
   -> { | props }
   -> JSX
 instancedMesh = elementWithArgs (threejs "InstancedMesh") flattenInstancedMeshArgs
+
+-- | Level of Detail
+-- |
+-- | It shows meshes with more or less geometries based on the distance from the
+-- | camera.
+type LODProps a =
+  ( autoUpdate :: Boolean
+  , isLOD :: Boolean
+  , levels ::
+      Array
+        { object :: a
+        , distance :: Number
+        , hysteresis :: Number
+        }
+  )
+
+lodToProps
+  :: forall a
+   . Object3D a
+  => LOD
+  -> { | LODProps a }
+lodToProps = unsafeCoerce
 
 class Mesh a where
   getGeometry :: a -> Effect BufferGeometry

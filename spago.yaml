@@ -10,6 +10,7 @@ package:
     - react-basic
     - react-basic-dom
     - react-basic-hooks
+    - typelevel-prelude
     - typelevel-regex
   name: react-basic-three
   test:
