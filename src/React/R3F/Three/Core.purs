@@ -7,10 +7,11 @@ import Data.Function.Uncurried (Fn3, mkFn3)
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn2, runEffectFn1, runEffectFn2)
 import Foreign (Foreign)
+import Foreign.Object as FO
 import Prim.Row (class Union)
 import React.Basic (JSX)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
-import React.R3F.Three.Types (Matrix4, Object3D)
+import React.R3F.Three.Types (Box3, BufferAttribute, Matrix4, Object3D, Sphere)
 
 class Object3D a where
   setPosition :: a -> (Number -> Number -> Number -> (Array Number)) -> Effect Unit
@@ -23,6 +24,21 @@ instance object3DSelf :: Object3D Object3D where
   setRotation = \obj -> runEffectFn2 setRotationImpl obj <<< mkFn3
   updateMatrix = runEffectFn1 object3DUpdateMatrix
   getMatrix = runEffectFn1 object3DMatrix
+
+type BufferGeometryProps a =
+  ( boundingBox :: Box3
+  , boundingSphere :: Sphere
+  , id :: Int
+  , index :: BufferAttribute
+  , isBufferGeometry :: Boolean
+  , morphAttributes :: FO.Object BufferAttribute
+  , morphTargetsRelative :: Boolean
+  , name :: String
+  , userData :: { | a }
+  , uuid :: String
+  , attach :: String
+  , children :: Array JSX
+  )
 
 type InstancedBufferAttributeArgs a =
   ( array :: ArrayView a

@@ -7,9 +7,10 @@ import Effect.Uncurried (EffectFn1, runEffectFn1)
 -- Core
 -- ===========================================================================
 
-foreign import data Object3D :: Type
+foreign import data BufferAttribute :: Type
 foreign import data BufferGeometry :: Type
 foreign import data InstancedBufferAttribute :: Type
+foreign import data Object3D :: Type
 
 foreign import createObject3D :: Effect Object3D
 
@@ -32,9 +33,11 @@ foreign import data MeshLambertMaterial :: Type
 -- Math
 -- ===========================================================================
 
+foreign import data Box3 :: Type
 foreign import data Color :: Type
 foreign import data Matrix4 :: Type
 foreign import data Plane :: Type
+foreign import data Sphere :: Type
 foreign import data Vector3 :: Type
 foreign import data Vector2 :: Type
 

@@ -7,12 +7,11 @@ import Data.Symbol (class IsSymbol, reflectSymbol)
 import React.Basic (JSX, ReactComponent, element)
 import React.R3F.Three.Internal (StartWithUppercase, extend, threejs)
 import React.R3F.Three.Materials (MaterialProps)
-import React.R3F.Three.Objects (LODProps)
 import Type.Prelude (Proxy(..))
 import Type.Regex (class TestRegex)
 import Type.Row (type (+))
 
-type ShaderMaterialProps a b c d e r =
+type ShaderMaterialProps a b c d r =
   ( clipping :: Boolean
   , defaultAttributeValues :: { | a }
   , extensions ::
@@ -20,7 +19,6 @@ type ShaderMaterialProps a b c d e r =
       , fragDepth :: Boolean
       , drawBuffers :: Boolean
       , shaderTextureLOD :: Boolean
-      | (LODProps b)
       }
   , fog :: Boolean
   , glslVersion :: String
@@ -29,14 +27,23 @@ type ShaderMaterialProps a b c d e r =
   , lights :: Boolean
   , linewidth :: Number
   , flatShading :: Boolean
-  , uniforms :: { | c }
+  , uniforms :: { | b }
   , uniformsNeedUpdate :: Boolean
   , vertexColors :: Boolean
   , wireframe :: Boolean
   , wireframeLinewidth :: Number
-  | (MaterialProps d e) + r
+  | (MaterialProps c d) + r
   )
 
+-- | A material rendered with custom shaders.
+-- |
+-- | A shader is a small GLSL program that runs on the GPU. Each shader material
+-- | can receive two different shaders: a vertex shader and a fragment shader.
+-- |
+-- | A shader material also have to have a name and the name must starts with an
+-- | uppercase character which is dictated by the underlying `threejs` platform.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/materials/ShaderMaterial)
 shaderMaterial
   :: forall @materialName args props
    . IsSymbol materialName

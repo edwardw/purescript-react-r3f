@@ -4,6 +4,7 @@ package:
     - console
     - effect
     - foreign
+    - foreign-object
     - functions
     - prelude
     - profunctor-lenses
