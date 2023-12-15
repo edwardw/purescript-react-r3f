@@ -93,3 +93,27 @@ foreign import oneMinusConstantColorFactor :: SourceFactors
 foreign import constantAlphaFactor :: SourceFactors
 foreign import oneMinusConstantAlphaFactor :: SourceFactors
 
+-- ===========================================================================
+-- Renderer Constants
+-- ===========================================================================
+
+data ShadowTypes
+
+foreign import basicShadowMap :: ShadowTypes
+foreign import pCFShadowMap :: ShadowTypes
+foreign import pCFSoftShadowMap :: ShadowTypes
+foreign import vSMShadowMap :: ShadowTypes
+
+-- ===========================================================================
+-- Texture Constants
+-- ===========================================================================
+
+data MappingModes
+
+foreign import uVMapping :: MappingModes
+foreign import cubeReflectionMapping :: MappingModes
+foreign import cubeRefractionMapping :: MappingModes
+foreign import equirectangularReflectionMapping :: MappingModes
+foreign import equirectangularRefractionMapping :: MappingModes
+foreign import cubeUVReflectionMapping :: MappingModes
+

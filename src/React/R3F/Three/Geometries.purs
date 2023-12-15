@@ -3,7 +3,6 @@ module React.R3F.Three.Geometries where
 import Foreign (Foreign)
 import Prim.Row (class Union)
 import React.Basic (JSX)
-import React.R3F.Three.Core (BufferGeometryProps)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
 
 type BoxGeometryArgs =
@@ -19,9 +18,8 @@ type BoxGeometryArgs =
 -- |
 -- | [Reference](https://threejs.org/docs/index.html#api/en/geometries/BoxGeometry)
 boxGeometry
-  :: forall args args_ props props_ a
+  :: forall args args_ props
    . Union args args_ BoxGeometryArgs
-  => Union props props_ (BufferGeometryProps a)
   => { | args }
   -> { | props }
   -> JSX

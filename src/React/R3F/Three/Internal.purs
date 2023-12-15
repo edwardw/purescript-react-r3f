@@ -39,3 +39,14 @@ foreign import elementImpl
 
 foreign import extendImpl :: forall a. Fn2 String a Unit
 
+-- purescript-literals has it, but seems to have bundling errors.
+foreign import data Null :: Type
+foreign import nullImpl :: Null
+
+-- | The js null value
+-- |
+-- | In three.js, to "un-set" a property of some object often is to set it to
+-- | null.
+null :: Null
+null = nullImpl
+

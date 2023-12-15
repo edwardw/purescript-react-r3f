@@ -2,6 +2,7 @@ module React.R3F.Three.Types where
 
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, runEffectFn1)
+import Prim.Row (class Union)
 
 -- ===========================================================================
 -- Core
@@ -28,7 +29,7 @@ foreign import data Mesh :: Type
 -- ===========================================================================
 
 foreign import data Material :: Type
-foreign import data MeshLambertMaterial :: Type
+foreign import meshNormalMaterial :: Effect Material
 
 -- ===========================================================================
 -- Math
@@ -65,7 +66,19 @@ foreign import data WebGLRenderer :: Type
 -- Scenes
 -- ===========================================================================
 
+foreign import data Fog :: Type
 foreign import data Scene :: Type
+
+type FogArgs = (color :: String, near :: Number, far :: Number)
+
+createFog
+  :: forall args args_
+   . Union args args_ FogArgs
+  => { | args }
+  -> Effect Fog
+createFog = runEffectFn1 createFogImpl
+
+foreign import createFogImpl :: forall props. EffectFn1 { | props } Fog
 
 -- ===========================================================================
 -- Textures

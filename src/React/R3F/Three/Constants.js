@@ -67,3 +67,15 @@ export const oneMinusConstantColorFactor = Three.OneMinusConstantColorFactor
 export const constantAlphaFactor = Three.ConstantAlphaFactor
 export const oneMinusConstantAlphaFactor = Three.OneMinusConstantAlphaFactor
 
+export const basicShadowMap = Three.BasicShadowMap
+export const pCFShadowMap = Three.PCFShadowMap
+export const pCFSoftShadowMap = Three.PCFSoftShadowMap
+export const vSMShadowMap = Three.VSMShadowMap
+
+export const uVMapping = Three.UVMapping
+export const cubeReflectionMapping = Three.CubeReflectionMapping
+export const cubeRefractionMapping = Three.CubeRefractionMapping
+export const equirectangularReflectionMapping = Three.EquirectangularReflectionMapping
+export const equirectangularRefractionMapping = Three.EquirectangularRefractionMapping
+export const cubeUVReflectionMapping = Three.CubeUVReflectionMapping
+

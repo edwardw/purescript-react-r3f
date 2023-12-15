@@ -42,3 +42,5 @@ export const extendImpl = (name, klass) => {
   return
 }
 
+export const nullImpl = null
+

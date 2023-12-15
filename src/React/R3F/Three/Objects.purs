@@ -34,12 +34,10 @@ type MeshArgs =
 -- |
 -- | [Reference](https://threejs.org/docs/index.html#api/en/objects/Mesh)
 mesh
-  :: forall args args_ props
-   . Union args args_ MeshArgs
-  => { | args }
-  -> { | props }
+  :: forall props
+   . { | props }
   -> JSX
-mesh = elementWithArgs (threejs "Mesh") flattenMeshArgs
+mesh = element (threejs "Mesh")
 
 type InstancedMeshArgs =
   ( count :: Int
