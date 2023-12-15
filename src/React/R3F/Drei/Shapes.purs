@@ -1,27 +1,42 @@
 module React.R3F.Drei.Shapes where
 
-import React.Basic (JSX, ReactComponent, element)
+import Prim.Row (class Union)
+import React.Basic (JSX, ReactComponent)
+import React.R3F.Three.Geometries (BoxGeometryArgs, PlaneGeometryArgs, TorusKnotGeometryArgs, flattenBoxArgs, flattenPlaneArgs, flattenTorusKnotArgs)
+import React.R3F.Three.Internal (elementWithArgs)
 
 -- | Shortcut for a mesh with a box geometry.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/geometries/BoxGeometry)
 box
-  :: forall props
-   . { | props }
+  :: forall args args_ props
+   . Union args args_ BoxGeometryArgs
+  => { | args }
+  -> { | props }
   -> JSX
-box = element boxImpl
+box = elementWithArgs boxImpl flattenBoxArgs
 
 -- | Shortcut for a mesh with a plane geometry.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/geometries/PlaneGeometry)
 plane
-  :: forall props
-   . { | props }
+  :: forall args args_ props
+   . Union args args_ PlaneGeometryArgs
+  => { | args }
+  -> { | props }
   -> JSX
-plane = element planeImpl
+plane = elementWithArgs planeImpl flattenPlaneArgs
 
--- | A shortcut for a mesh with a torus knot geometry.
+-- | Shortcut for a mesh with a torus knot geometry.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/geometries/TorusKnotGeometry)
 torusKnot
-  :: forall props
-   . { | props }
+  :: forall args args_ props
+   . Union args args_ TorusKnotGeometryArgs
+  => { | args }
+  -> { | props }
   -> JSX
-torusKnot = element torusKnotImpl
+torusKnot = elementWithArgs torusKnotImpl flattenTorusKnotArgs
 
 foreign import boxImpl :: forall props. ReactComponent { | props }
 foreign import planeImpl :: forall props. ReactComponent { | props }

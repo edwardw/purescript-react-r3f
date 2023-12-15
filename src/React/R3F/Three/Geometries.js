@@ -9,3 +9,23 @@ export const flattenBoxArgs = (args) => {
   ]
 }
 
+export const flattenPlaneArgs = (args) => {
+  return [
+    args.width,
+    args.height,
+    args.widthSegments,
+    args.heightSegments,
+  ]
+}
+
+export const flattenTorusKnotArgs = (args) => {
+  return [
+    args.radius,
+    args.tube,
+    args.tubularSegments,
+    args.radialSegments,
+    args.p,
+    args.q,
+  ]
+}
+

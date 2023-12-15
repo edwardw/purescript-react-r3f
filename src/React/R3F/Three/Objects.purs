@@ -42,9 +42,8 @@ mesh
 mesh = elementWithArgs (threejs "Mesh") flattenMeshArgs
 
 type InstancedMeshArgs =
-  ( geometry :: BufferGeometry
-  , material :: Material
-  , count :: Int
+  ( count :: Int
+  | MeshArgs
   )
 
 -- | A special version of Mesh which supports instanced rendering.
