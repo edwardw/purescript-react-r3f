@@ -33,5 +33,9 @@ perf
   -> JSX
 perf = element perfImpl
 
+stats :: JSX
+stats = element statsImpl {}
+
 foreign import perfImpl :: forall props. ReactComponent { | props }
+foreign import statsImpl :: forall props. ReactComponent { | props }
 

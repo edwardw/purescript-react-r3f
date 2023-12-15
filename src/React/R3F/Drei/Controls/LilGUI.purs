@@ -3,7 +3,7 @@
 -- | It is not a `@react-three/fiber` component and will be rendered outside the
 -- | `@react-three/fiber` root canvas. Creating one is enough for a gui to show
 -- | up.
-module React.Basic.R3F.Controls.LilGUI
+module React.R3F.Drei.Controls.LilGUI
   ( GUI
   , Controller
   , create

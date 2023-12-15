@@ -9,6 +9,7 @@ import Effect.Uncurried (EffectFn1, runEffectFn1)
 
 foreign import data BufferAttribute :: Type
 foreign import data BufferGeometry :: Type
+foreign import data Clock :: Type
 foreign import data InstancedBufferAttribute :: Type
 foreign import data Object3D :: Type
 
@@ -53,6 +54,18 @@ createVector3 = runEffectFn1 createVector3Impl
 foreign import createColorImpl :: EffectFn1 String Color
 foreign import createMatrix4Impl :: EffectFn1 (Array Number) Matrix4
 foreign import createVector3Impl :: EffectFn1 (Array Number) Vector3
+
+-- ===========================================================================
+-- Renderers
+-- ===========================================================================
+
+foreign import data WebGLRenderer :: Type
+
+-- ===========================================================================
+-- Scenes
+-- ===========================================================================
+
+foreign import data Scene :: Type
 
 -- ===========================================================================
 -- Textures

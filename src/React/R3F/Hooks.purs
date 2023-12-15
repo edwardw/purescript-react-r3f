@@ -11,9 +11,8 @@ import Effect.Uncurried (EffectFn1, EffectFn2, mkEffectFn2, runEffectFn1, runEff
 import Prim.Row (class Cons)
 import React.Basic (JSX, Ref)
 import React.Basic.Hooks (Hook, unsafeHook)
-import React.Basic.R3F.Loaders (Texture)
-import React.Basic.R3F.Three as Three
-import React.R3F.Three.Types (Object3D)
+import React.R3F.Three.Types (Object3D, Texture)
+import React.R3F.Three.Types as Three
 import Type.Prelude (Proxy(..))
 import Unsafe.Coerce (unsafeCoerce)
 

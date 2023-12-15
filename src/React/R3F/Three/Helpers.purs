@@ -1,4 +1,4 @@
-module React.Basic.R3F.Controls.Helpers
+module React.R3F.Three.Helpers
   ( axesHelper
   , gridHelper
   , polarGridHelper
@@ -13,7 +13,7 @@ import Foreign (Foreign)
 import Prim.Row (class Union)
 import React.Basic (JSX, element)
 import React.Basic.Hooks (Hook, unsafeHook)
-import React.Basic.R3F.Internal (elementWithArgs, threejs)
+import React.R3F.Three.Internal (elementWithArgs, threejs)
 
 -- | A simple axis object to visualize the three axes.
 -- | The x, y and z axes are red, green and blue, respectively.
@@ -34,7 +34,7 @@ gridHelper
   => { | args }
   -> { | props }
   -> JSX
-gridHelper = elementWithArgs (threejs "GridHelper") gridHelperArgs
+gridHelper = elementWithArgs (threejs "GridHelper") flattenGridHelperArgs
 
 type PolarGridHelperArgs =
   ( radius :: Number
@@ -52,7 +52,9 @@ polarGridHelper
   => { | args }
   -> { | props }
   -> JSX
-polarGridHelper = elementWithArgs (threejs "PolarGridHelper") polarGridHelperArgs
+polarGridHelper = elementWithArgs (threejs "PolarGridHelper") flattenPolarHelperArgs
+
+foreign import data UseHelper :: Type -> Type -> Type
 
 -- | The camera helper visualizes the frustum of a camera.
 -- |
@@ -63,10 +65,7 @@ polarGridHelper = elementWithArgs (threejs "PolarGridHelper") polarGridHelperArg
 useCameraHelper :: forall a b. a -> Hook (UseHelper b) Unit
 useCameraHelper = unsafeHook <<< runEffectFn1 useCameraHelperImpl
 
-foreign import gridHelperArgs :: forall args. { | args } -> Foreign
-foreign import polarGridHelperArgs :: forall args. { | args } -> Foreign
-
-foreign import data UseHelper :: Type -> Type -> Type
-
+foreign import flattenGridHelperArgs :: forall args. { | args } -> Array Foreign
+foreign import flattenPolarHelperArgs :: forall args. { | args } -> Array Foreign
 foreign import useCameraHelperImpl :: forall a. EffectFn1 a Unit
 

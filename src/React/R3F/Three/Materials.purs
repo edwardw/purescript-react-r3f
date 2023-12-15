@@ -1,7 +1,7 @@
 module React.R3F.Three.Materials where
 
 import Prim.Row (class Union)
-import React.Basic (JSX)
+import React.Basic (JSX, element)
 import React.R3F.Three.Constants (BlendingEquations, BlendingMode, DepthMode, NormalMapType, Side, SourceFactors, StencilFunctions, StencilOperations, TextureCombineOperations)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
 import React.R3F.Three.Types (Color, Plane, Texture, Vector2)
@@ -108,4 +108,22 @@ meshLambertMaterial
   -> JSX
 meshLambertMaterial =
   elementWithArgs (threejs "MeshLambertMaterial") \args -> [ unsafeCoerce args ]
+
+meshPhongMaterial
+  :: forall props
+   . { | props }
+  -> JSX
+meshPhongMaterial = element (threejs "MeshPhongMaterial")
+
+meshStandardMaterial
+  :: forall props
+   . { | props }
+  -> JSX
+meshStandardMaterial = element (threejs "MeshStandardMaterial")
+
+meshNormalMaterial
+  :: forall props
+   . { | props }
+  -> JSX
+meshNormalMaterial = element (threejs "MeshNormalMaterial")
 

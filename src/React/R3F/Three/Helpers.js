@@ -1,7 +1,7 @@
 import { useHelper } from "@react-three/drei"
 import * as Three from "three"
 
-export const gridHelperArgs = (args) => {
+export const flattenGridHelperArgs = (args) => {
   return [
     args.size,
     args.divisions,
@@ -10,7 +10,7 @@ export const gridHelperArgs = (args) => {
   ]
 }
 
-export const polarGridHelperArgs = (args) => {
+export const flattenPolarHelperArgs = (args) => {
   return [
     args.redius,
     args.sectors,

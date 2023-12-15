@@ -1,17 +1,10 @@
-module React.Basic.R3F.Loaders
-  ( Texture
-  , UseLoader
-  , useTexture
-  , useGLTF
-  , useEnvironment
-  ) where
+module React.R3F.Drei.Loaders where
 
 import Prelude
 
 import Effect.Uncurried (EffectFn1, runEffectFn1)
 import React.Basic.Hooks (Hook, unsafeHook)
-
-foreign import data Texture :: Type
+import React.R3F.Three.Types (Texture)
 
 useTexture :: forall hooks. String -> Hook (UseLoader hooks) Texture
 useTexture = unsafeHook <<< runEffectFn1 useTextureImpl
