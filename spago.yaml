@@ -6,6 +6,7 @@ package:
     - foreign
     - foreign-object
     - functions
+    - js-object
     - prelude
     - profunctor-lenses
     - react-basic
@@ -18,7 +19,26 @@ package:
     dependencies: []
     main: Test.Main
 workspace:
-  extra_packages: {}
+  extra_packages:
+    js-object:
+      git: https://github.com/purescript-codegen/purescript-js-object
+      ref: baba9598f114062dfaa4025b79eca0e06245a0c6
+      dependencies:
+        [ aff
+        , contravariant
+        , effect
+        , foreign
+        , foreign-object
+        , heterogeneous
+        , newtype
+        , nullable
+        , partial
+        , prelude
+        , record
+        , typelevel-prelude
+        , unsafe-coerce
+        , unsafe-reference
+        ]
   build_opts:
     censor_library_warnings: all
   package_set:

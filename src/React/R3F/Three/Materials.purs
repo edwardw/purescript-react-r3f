@@ -1,15 +1,21 @@
 module React.R3F.Three.Materials where
 
+import Prelude
+
+import Effect (Effect)
+import Effect.Aff.Compat (EffectFn1)
+import Effect.Uncurried (EffectFn3, runEffectFn1, runEffectFn3)
 import Prim.Row (class Union)
-import React.Basic (JSX, element)
+import React.Basic (JSX, Ref, element)
 import React.R3F.Three.Constants (BlendingEquations, BlendingMode, DepthMode, NormalMapType, Side, SourceFactors, StencilFunctions, StencilOperations, TextureCombineOperations)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
-import React.R3F.Three.Types (Color, Plane, Texture, Vector2)
+import React.R3F.Three.Types (Color, Plane, ShaderMaterial, Texture, Vector2)
 import Type.Row (type (+))
 import Unsafe.Coerce (unsafeCoerce)
 
 type MaterialProps a b r =
-  ( attach :: String
+  ( ref :: Ref JSX
+  , attach :: String
   , alphaHash :: Boolean
   , alphaTest :: Boolean
   , alphaToCoverage :: Boolean
@@ -126,4 +132,21 @@ meshNormalMaterial
    . { | props }
   -> JSX
 meshNormalMaterial = element (threejs "MeshNormalMaterial")
+
+class ShaderMaterial a props value where
+  getUniforms :: a -> Effect { | props }
+  setUniforms :: a -> String -> value -> Effect Unit
+
+instance shaderMatSelf :: ShaderMaterial ShaderMaterial props value where
+  getUniforms = runEffectFn1 shaderMatUniforms
+  setUniforms = runEffectFn3 shaderMatSetUniforms
+
+instance shaderMatRef :: ShaderMaterial (Ref JSX) props value where
+  getUniforms = runEffectFn1 shaderMatUniformsByRef
+  setUniforms = runEffectFn3 shaderMatSetUniformsByRef
+
+foreign import shaderMatUniforms :: forall props. EffectFn1 ShaderMaterial { | props }
+foreign import shaderMatSetUniforms :: forall value. EffectFn3 ShaderMaterial String value Unit
+foreign import shaderMatUniformsByRef :: forall a. EffectFn1 (Ref JSX) a
+foreign import shaderMatSetUniformsByRef :: forall value. EffectFn3 (Ref JSX) String value Unit
 

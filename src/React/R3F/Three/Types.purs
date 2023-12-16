@@ -1,7 +1,7 @@
 module React.R3F.Three.Types where
 
 import Effect (Effect)
-import Effect.Uncurried (EffectFn1, runEffectFn1)
+import Effect.Uncurried (EffectFn1, EffectFn4, runEffectFn1, runEffectFn4)
 import Prim.Row (class Union)
 
 -- ===========================================================================
@@ -17,6 +17,18 @@ foreign import data Object3D :: Type
 foreign import createObject3D :: Effect Object3D
 
 -- ===========================================================================
+-- Geometries
+-- ===========================================================================
+
+foreign import data PlaneGeometry :: Type
+
+createPlaneGeometry :: Number -> Number -> Int -> Int -> Effect PlaneGeometry
+createPlaneGeometry = runEffectFn4 createPlaneGeometryImpl
+
+foreign import createPlaneGeometryImpl
+  :: EffectFn4 Number Number Int Int PlaneGeometry
+
+-- ===========================================================================
 -- Objects
 -- ===========================================================================
 
@@ -29,6 +41,7 @@ foreign import data Mesh :: Type
 -- ===========================================================================
 
 foreign import data Material :: Type
+foreign import data ShaderMaterial :: Type
 foreign import meshNormalMaterial :: Effect Material
 
 -- ===========================================================================

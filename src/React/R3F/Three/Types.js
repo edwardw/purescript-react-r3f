@@ -26,6 +26,10 @@ export const createFogImpl = (props) => {
   return new Three.Fog(...args)
 }
 
+export const createPlaneGeometryImpl = (width, height, widthSegments, heightSegments) => {
+  return new Three.PlaneGeometry(width, height, widthSegments, heightSegments)
+}
+
 export const meshNormalMaterial = () => {
   return new Three.MeshNormalMaterial()
 }
