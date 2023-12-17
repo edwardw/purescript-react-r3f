@@ -3,6 +3,8 @@ module React.R3F.Three.Types where
 import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn4, runEffectFn1, runEffectFn4)
 import Prim.Row (class Union)
+import React.R3F.Three.Internal (null)
+import Unsafe.Coerce (unsafeCoerce)
 
 -- ===========================================================================
 -- Core
@@ -98,4 +100,13 @@ foreign import createFogImpl :: forall props. EffectFn1 { | props } Fog
 -- ===========================================================================
 
 foreign import data Texture :: Type
+
+-- | A placeholder texture.
+-- |
+-- | Occasionally useful, e.g. when one defines a shader material and wants
+-- | textures as part of the shader parameters, but the concrete textures are
+-- | only available when instantiating the material, then use this do-nothing
+-- | placeholder texture.
+placeholderTexture :: Texture
+placeholderTexture = unsafeCoerce null
 
