@@ -29,3 +29,15 @@ export const flattenTorusKnotArgs = (args) => {
   ]
 }
 
+export const flattenSphereArgs = (args) => {
+  return [
+    args.radius,
+    args.widthSegments,
+    args.heightSegments,
+    args.phiStart,
+    args.phiLength,
+    args.thetaStart,
+    args.thetaLength,
+  ]
+}
+

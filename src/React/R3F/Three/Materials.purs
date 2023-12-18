@@ -133,6 +133,15 @@ meshNormalMaterial
   -> JSX
 meshNormalMaterial = element (threejs "MeshNormalMaterial")
 
+-- | A material for drawing geometries in a simple shaded way.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/materials/MeshBasicMaterial)
+meshBasicMaterial
+  :: forall props
+   . { | props }
+  -> JSX
+meshBasicMaterial = element (threejs "MeshBasicMaterial")
+
 class ShaderMaterial a props value where
   getUniforms :: a -> Effect { | props }
   setUniforms :: a -> String -> value -> Effect Unit

@@ -70,13 +70,6 @@ name
   -> Effect (Controller a)
 name = runEffectFn2 nameImpl
 
--- Subtle: `onChangeImpl` has a callback of signature
---    EffectFn1 String Unit
--- and `onChange`
---    String -> Effect Unit
--- If passing the curried version directly to `onChangeImpl`, the callback will
--- have no effect since the js side tries to call it like so
---    ((str) -> () -> { ... })()
 onChange
   :: forall a
    . (a -> Effect Unit)

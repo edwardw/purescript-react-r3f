@@ -4,6 +4,7 @@ import Prelude
 
 import Data.Function.Uncurried (Fn3, runFn3)
 import Data.Symbol (class IsSymbol, reflectSymbol)
+import Prim.Row (class Union)
 import React.Basic (JSX, ReactComponent, element)
 import React.R3F.Three.Internal (StartWithUppercase, extend, threejs)
 import React.R3F.Three.Materials (MaterialProps)
@@ -60,7 +61,31 @@ shaderMaterial args vertexShader fragmentShader =
   in
     element $ threejs $ reflectSymbol (Proxy :: _ materialName)
 
+type SoftShadowsProps =
+  ( size :: Number
+  , focus :: Number
+  , samples :: Int
+  )
+
+-- | Injects percent closer soft shadows (PCSS) into the scene.
+-- |
+-- | Properties:
+-- |   - size: size of the light source (the larger the softer the light),
+-- | default 25
+-- |   - focus: depth focus, use it to shift the focal point (where the shadow is
+-- | the sharpest), default 0 (the beginning)
+-- |   - samples: number of samples (more samples less noise but more
+-- |   expensive), default 10
+softShadows
+  :: forall props props_
+   . Union props props_ SoftShadowsProps
+  => { | props }
+  -> JSX
+softShadows = element softShadowsImpl
+
 foreign import shaderMaterialImpl
   :: forall args props
    . Fn3 { | args } String String (ReactComponent { | props })
+
+foreign import softShadowsImpl :: forall props. ReactComponent { | props }
 

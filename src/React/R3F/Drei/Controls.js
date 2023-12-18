@@ -1,4 +1,5 @@
-import * as R3D from "@react-three/drei"
+import * as Drei from "@react-three/drei"
 
-export const orbitControlsImpl = R3D.OrbitControls
+export const orbitControlsImpl = Drei.OrbitControls
+export const cameraControlsImpl = Drei.CameraControls
 

@@ -63,7 +63,29 @@ torusKnotGeometry
   -> JSX
 torusKnotGeometry = elementWithArgs (threejs "TorusKnotGeometry") flattenTorusKnotArgs
 
+type SphereGeometryArgs =
+  ( radius :: Number
+  , widthSegments :: Int
+  , heightSegments :: Int
+  , phiStart :: Number
+  , phiLength :: Number
+  , thetaStart :: Number
+  , thetaLength :: Number
+  )
+
+-- | A sphere.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/geometries/SphereGeometry)
+sphereGeometry
+  :: forall args args_ props
+   . Union args args_ SphereGeometryArgs
+  => { | args }
+  -> { | props }
+  -> JSX
+sphereGeometry = elementWithArgs (threejs "SphereGeometry") flattenSphereArgs
+
 foreign import flattenBoxArgs :: forall args. { | args } -> Array Foreign
 foreign import flattenPlaneArgs :: forall args. { | args } -> Array Foreign
 foreign import flattenTorusKnotArgs :: forall args. { | args } -> Array Foreign
+foreign import flattenSphereArgs :: forall args. { | args } -> Array Foreign
 

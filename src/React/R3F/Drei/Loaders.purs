@@ -43,6 +43,10 @@ useTexture = unsafeHook <<< runEffectFn1 useTextureImpl
 useGLTF :: forall hooks a. String -> Hook (UseLoader hooks) a
 useGLTF = unsafeHook <<< runEffectFn1 useGLTFImpl
 
+-- | To preload the GLTF asset.
+preloadGLTF :: forall hooks. String -> Hook (UseLoader hooks) Unit
+preloadGLTF = unsafeHook <<< runEffectFn1 preloadGLTFImpl
+
 -- | An environment map loader.
 -- |
 -- | Usually in `hdr` or `exr` format.
@@ -53,5 +57,6 @@ foreign import data UseLoader :: Type -> Type -> Type
 
 foreign import useTextureImpl :: EffectFn1 String Texture
 foreign import useGLTFImpl :: forall a. EffectFn1 String a
+foreign import preloadGLTFImpl :: EffectFn1 String Unit
 foreign import useEnvImpl :: forall props. EffectFn1 { | props } Texture
 
