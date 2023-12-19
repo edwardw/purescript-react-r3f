@@ -12,6 +12,7 @@ package:
     - react-basic
     - react-basic-dom
     - react-basic-hooks
+    - record-extra
     - typelevel-prelude
     - typelevel-regex
   name: react-basic-three
@@ -24,20 +25,21 @@ workspace:
       git: https://github.com/purescript-codegen/purescript-js-object
       ref: baba9598f114062dfaa4025b79eca0e06245a0c6
       dependencies:
-        [ aff
-        , contravariant
-        , effect
-        , foreign
-        , foreign-object
-        , heterogeneous
-        , newtype
-        , nullable
-        , partial
-        , prelude
-        , record
-        , typelevel-prelude
-        , unsafe-coerce
-        , unsafe-reference
+        [
+          aff,
+          contravariant,
+          effect,
+          foreign,
+          foreign-object,
+          heterogeneous,
+          newtype,
+          nullable,
+          partial,
+          prelude,
+          record,
+          typelevel-prelude,
+          unsafe-coerce,
+          unsafe-reference
         ]
   build_opts:
     censor_library_warnings: all
