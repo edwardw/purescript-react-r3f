@@ -8,7 +8,7 @@ import Effect (Effect)
 import Effect.Uncurried (EffectFn1, EffectFn2, EffectFn3, EffectFn4, runEffectFn1, runEffectFn2, runEffectFn3, runEffectFn4)
 import Foreign (Foreign)
 import Prim.Row (class Union)
-import React.Basic (JSX, element)
+import React.Basic (JSX, Ref, element)
 import React.R3F.Three.Internal (elementWithArgs, threejs)
 import React.R3F.Three.Types (BufferAttribute, BufferGeometry, Clock, Matrix4, Object3D, PlaneGeometry, Vector3)
 import Unsafe.Coerce (unsafeCoerce)
@@ -24,6 +24,12 @@ instance object3DSelf :: Object3D Object3D where
   setRotation = \obj -> runEffectFn2 setRotationImpl obj <<< mkFn3
   updateMatrix = runEffectFn1 object3DUpdateMatrix
   getMatrix = runEffectFn1 object3DMatrix
+
+instance object3DRefJSX :: Object3D (Ref JSX) where
+  setPosition = \ref -> runEffectFn2 refSetPosition ref <<< mkFn3
+  setRotation = \ref -> runEffectFn2 refSetRotation ref <<< mkFn3
+  updateMatrix = runEffectFn1 refUpdateMatrix
+  getMatrix = runEffectFn1 refMatrix
 
 class BufferGeometry a where
   getIndex :: a -> Effect BufferAttribute
@@ -84,6 +90,10 @@ foreign import setPositionImpl :: EffectFn2 Object3D (Fn3 Number Number Number (
 foreign import setRotationImpl :: EffectFn2 Object3D (Fn3 Number Number Number (Array Number)) Unit
 foreign import object3DUpdateMatrix :: EffectFn1 Object3D Unit
 foreign import object3DMatrix :: EffectFn1 Object3D Matrix4
+foreign import refSetPosition :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import refSetRotation :: EffectFn2 (Ref JSX) (Fn3 Number Number Number (Array Number)) Unit
+foreign import refUpdateMatrix :: EffectFn1 (Ref JSX) Unit
+foreign import refMatrix :: EffectFn1 (Ref JSX) Matrix4
 foreign import bufferGeoGetIndex :: EffectFn1 BufferGeometry BufferAttribute
 foreign import bufferGeoGetAttribute :: EffectFn2 BufferGeometry String BufferAttribute
 foreign import bufferGeoSetAttribute :: EffectFn3 BufferGeometry String BufferAttribute Unit

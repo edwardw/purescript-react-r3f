@@ -84,8 +84,27 @@ sphereGeometry
   -> JSX
 sphereGeometry = elementWithArgs (threejs "SphereGeometry") flattenSphereArgs
 
+type CircleGeometryArgs =
+  ( radius :: Number
+  , segments :: Int
+  , thetaStart :: Number
+  , thetaLength :: Number
+  )
+
+-- | A circle or part of a circle.
+-- |
+-- | [Reference](https://threejs.org/docs/index.html#api/en/geometries/CircleGeometry)
+circleGeometry
+  :: forall args args_ props
+   . Union args args_ CircleGeometryArgs
+  => { | args }
+  -> { | props }
+  -> JSX
+circleGeometry = elementWithArgs (threejs "CircleGeometry") flattenCircleArgs
+
 foreign import flattenBoxArgs :: forall args. { | args } -> Array Foreign
 foreign import flattenPlaneArgs :: forall args. { | args } -> Array Foreign
 foreign import flattenTorusKnotArgs :: forall args. { | args } -> Array Foreign
 foreign import flattenSphereArgs :: forall args. { | args } -> Array Foreign
+foreign import flattenCircleArgs :: forall args. { | args } -> Array Foreign
 

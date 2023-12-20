@@ -41,3 +41,12 @@ export const flattenSphereArgs = (args) => {
   ]
 }
 
+export const flattenCircleArgs = (args) => {
+  return [
+    args.radius,
+    args.segments,
+    args.thetaStart,
+    args.thetaLength,
+  ]
+}
+

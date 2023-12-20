@@ -15,6 +15,7 @@ package:
     - record-extra
     - typelevel-prelude
     - typelevel-regex
+    - untagged-union
   name: react-basic-three
   test:
     dependencies: []

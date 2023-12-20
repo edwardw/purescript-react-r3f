@@ -87,5 +87,14 @@ foreign import shaderMaterialImpl
   :: forall args props
    . Fn3 { | args } String String (ReactComponent { | props })
 
+-- | A `MeshTransmissionMaterial` is improved `threejs MeshPhysicalMaterial`.
+-- TODO: tighten the props type
+meshTransmissionMaterial
+  :: forall props
+   . { | props }
+  -> JSX
+meshTransmissionMaterial = element meshTransmissionMaterialImpl
+
 foreign import softShadowsImpl :: forall props. ReactComponent { | props }
+foreign import meshTransmissionMaterialImpl :: forall props. ReactComponent { | props }
 

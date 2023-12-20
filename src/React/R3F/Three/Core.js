@@ -1,5 +1,3 @@
-import * as Three from "three"
-
 export const object3DUpdateMatrix = (obj) => {
   obj.updateMatrix()
   return
@@ -19,6 +17,22 @@ export const setRotationImpl = (el, f) => {
   const angle = el.rotation
   el.rotation.set(...f(...angle))
   return
+}
+
+export const refUpdateMatrix = (ref) => {
+  return object3DUpdateMatrix(ref.current)
+}
+
+export const refMatrix = (ref) => {
+  return object3DMatrix(ref.current)
+}
+
+export const refSetPosition = (ref, f) => {
+  return setPositionImpl(ref.current, f)
+}
+
+export const refSetRotation = (ref, f) => {
+  return setRotationImpl(ref.current, f)
 }
 
 export const bufferGeoGetIndex = (geo) => {
